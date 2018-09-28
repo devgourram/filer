@@ -8,8 +8,8 @@
 
 namespace Iad\Bundle\FilerTechBundle\Tests\Entity;
 
-use Iad\Bundle\CoreBundle\Tests\DoctrineMockTrait;
-use Iad\Bundle\CoreBundle\Tests\Manager\AbstractManagerTrait;
+use Iad\Bundle\TestBundle\Tests\DoctrineMockTrait;
+use Iad\Bundle\TestBundle\Tests\AbstractManagerTrait;
 use Iad\Bundle\FilerTechBundle\Manager\DocumentObjectManager;
 
 /**
