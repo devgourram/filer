@@ -28,12 +28,12 @@
 
   "autoload": {
     "psr-4": {
-      "Iad\\Bundle\\FilerTechBundle": ""
+      "Iad\\Bundle\\FilerTechBundle\\": ""
     }
   },
   "autoload-dev": {
       "psr-4": {
-          "Iad\\Bundle\\FilerTechBundle\\Tests": "Tests/"
+          "Iad\\Bundle\\FilerTechBundle\\Tests\\": "Tests/"
       }
   },
   "extra": {
