@@ -219,7 +219,7 @@ class Filer
      */
     public function save(File $file, $idUploader)
     {
-        $this->checkFile($file);
+        //$this->checkFile($file);
 
         $uuid = $this->encoder->uuid($file->getContent());
         $directory = $this->formatDirectory($file->getType());

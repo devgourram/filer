@@ -66,10 +66,10 @@ class ResizeParameters
     /**
      * Construct
      */
-    public function __construct()
+    public function __construct($filter, $size)
     {
-        $this->filter  = null;
-        $this->size    = null;
+        $this->filter  = $filter;
+        $this->size    = $size;
         $this->quality = 70;
         $this->mode    = 'inset';
     }

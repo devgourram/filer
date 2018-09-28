@@ -107,7 +107,7 @@ class DocumentObject
     /**
      * @var array
      *
-     * @ORM\Column(name="details", type="json_array")
+     * @ORM\Column(name="details", type="json_array", nullable=true)
      */
     private $details;
 

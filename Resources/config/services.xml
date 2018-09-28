@@ -9,7 +9,9 @@
         <service id="iad_filer.manager.document_object" class="Iad\Bundle\FilerTechBundle\Manager\DocumentObjectManager" parent="iad_core.manager.abstract" />
 
         <service id="iad_filer.encoder" class="Iad\Bundle\FilerTechBundle\Business\Encoder" public="false" />
-        <service id="iad_filer.builder" class="Iad\Bundle\FilerTechBundle\Business\FileResource\FileBuilder" />
+        <service id="iad_filer.builder" class="Iad\Bundle\FilerTechBundle\Business\FileResource\FileBuilder">
+            <argument type="service" id="iad_filer.encoder" />
+        </service>
 
         <service id="iad_filer.image.manager" class="Iad\Bundle\FilerTechBundle\Business\ImageManager">
             <argument type="service" id="liip_imagine.filter.manager" />
@@ -21,12 +23,18 @@
             <argument type="service" id="iad_filer.image.manager" />
             <argument type="service" id="router" />
             <argument type="service" id="gaufrette.file_system" />
+            <argument>
+                small
+            </argument>
         </service>
 
-        <service id="gaufrette.adapter" class="Gaufrette\Adapter\Local" />
+        <service id="gaufrette.adapter" class="Gaufrette\Adapter\Local">
+            <argument>%iad_filer_tech_local_adapter_dir%</argument>
+        </service>
 
         <service id="gaufrette.file_system" class="Gaufrette\Filesystem">
             <argument type="service" id="gaufrette.adapter" />
         </service>
+
     </services>
 </container>
