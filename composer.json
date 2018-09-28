@@ -28,9 +28,14 @@
   },
 
   "autoload": {
-    "psr-0": {
+    "psr-4": {
       "Iad\\Bundle\\FilerTechBundle": ""
     }
+  },
+  "autoload-dev": {
+      "psr-4": {
+          "Iad\\Bundle\\FilerTechBundle\\Tests": "Tests/"
+      }
   },
   "extra": {
     "branch-alias": {
