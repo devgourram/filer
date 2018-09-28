@@ -15,12 +15,11 @@
 
   "require": {
     "php": ">=5.6",
-    "symfony/symfony": "~2.7",
-    "knplabs/knp-gaufrette-bundle": "~0.3",
-    "liip/imagine-bundle": "~1.3",
+    "symfony/symfony": "~2.7|~3.0",
+    "knplabs/knp-gaufrette-bundle": "~0.3|~0.5",
+    "liip/imagine-bundle": "~1.3|~2.0",
 
-    "iad-holding/core-bundle": "~1.1",
-    "iad-holding/db-tech-bundle": "dev-master"
+    "iad-holding/core-bundle": "dev-project/AR-42-migration-sf3.4"
   },
 
   "require-dev": {
