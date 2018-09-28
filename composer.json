@@ -1,7 +1,6 @@
 {
   "name": "iad-holding/filer-tech-bundle",
   "license": "proprietary",
-  "target-dir": "Iad/Bundle/FilerTechBundle",
   "type": "project",
   "description": "Filer bundle",
 
