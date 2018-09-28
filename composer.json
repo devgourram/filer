@@ -37,12 +37,6 @@
     "branch-alias": {
       "dev-FILER-23-insert-2": "2.0.x-dev"
     }
-  },
-  "config": {
-    "bin-dir": "bin",
-    "platform": {
-      "php": "5.6"
-    }
   }
 }
 
