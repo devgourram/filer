@@ -8,19 +8,25 @@
     <services>
         <service id="iad_filer.manager.document_object" class="Iad\Bundle\FilerTechBundle\Manager\DocumentObjectManager" parent="iad_core.manager.abstract" />
 
-        <service id="iad_filer.encoder" class="Iad\Bundle\FilerTechBundle\Business\Encoder" />
+        <service id="iad_filer.encoder" class="Iad\Bundle\FilerTechBundle\Business\Encoder" public="false" />
+        <service id="iad_filer.builder" class="Iad\Bundle\FilerTechBundle\Business\FileResource\FileBuilder" />
 
-
-        <service id="iad_filer" class="Iad\Bundle\FilerTechBundle\Business\Filer" />
-
-        <service id="iad_filer.filer_factory" class="Iad\Bundle\FilerTechBundle\Business\FilerFactory">
-            <argument type="service" id="iad_filer.manager.document_object" />
-            <argument type="service" id="iad_filer.encoder" />
+        <service id="iad_filer.image.manager" class="Iad\Bundle\FilerTechBundle\Business\ImageManager">
+            <argument type="service" id="liip_imagine.filter.manager" />
         </service>
 
-        <service id="iad_filer.avatar_filer" class="Iad\Bundle\FilerTechBundle\Business\AvatarFiler">
-            <tag name="iad_filer.business.service" />
-            <factory service="iad_filer.filer_factory" method="createAvatarFiler" />
+        <service id="iad_filer" class="Iad\Bundle\FilerTechBundle\Business\Filer">
+            <argument type="service" id="iad_filer.encoder" />
+            <argument type="service" id="iad_filer.manager.document_object" />
+            <argument type="service" id="iad_filer.image.manager" />
+            <argument type="service" id="router" />
+            <argument type="service" id="gaufrette.file_system" />
+        </service>
+
+        <service id="gaufrette.adapter" class="Gaufrette\Adapter\Local" />
+
+        <service id="gaufrette.file_system" class="Gaufrette\Filesystem">
+            <argument type="service" id="gaufrette.adapter" />
         </service>
     </services>
 </container>

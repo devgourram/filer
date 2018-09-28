@@ -4,10 +4,8 @@ iad_filer_tech:
             adapter: local
             enable_public: true
             enable_private: true
-            public_path: "%filer_channel_local_public_path%"
-            private_path: "%filer_channel_local_private_path%"
-    avatar_filer:
-        channel: local
+            public_path: /tmp/public
+            private_path: /tmp/public
 
 
 liip_imagine:

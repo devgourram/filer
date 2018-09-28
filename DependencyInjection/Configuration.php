@@ -22,15 +22,8 @@ class Configuration implements ConfigurationInterface
 
         $root
             ->children()
-                ->arrayNode('avatar_filer')
-                    ->info('avatar filer configuration')
-                    ->children()
-                        ->scalarNode('channel')->end()
-                    ->end()
-                ->end()
-
                 ->arrayNode('channels')
-                    ->info('List all channels available')
+                ->info('List all channels available')
                     ->children()
                         ->arrayNode('local')
                         ->info('Local channel configuration')
@@ -54,7 +47,6 @@ class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
                     ->end()
-                ->end()
             ->end();
 
         return $treeBuilder;

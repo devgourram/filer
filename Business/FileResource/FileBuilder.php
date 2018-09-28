@@ -15,32 +15,40 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class FileBuilder
 {
     /**
-     * @var EncoderInterface $encoder
+     * @var string
+     */
+    protected $rootPath;
+
+    /**
+     * @var EncoderInterface
      */
     protected $encoder;
 
     /**
      * @param EncoderInterface $encoder
-     *
+     * @param string           $rootPath
      */
-    public function __construct(EncoderInterface $encoder)
+    public function __construct(EncoderInterface $encoder, $rootPath = null)
     {
-        $this->encoder    = $encoder;
+        $this->encoder  = $encoder;
+        $this->rootPath = $rootPath === null ? sys_get_temp_dir() : $rootPath;
     }
 
     /**
-     * @param UploadedFile $uploadedFile
+     * @param UploadedFile $file
      * @param string       $documentType
      * @param string       $access
      * @param array        $details
      * @return File
      */
-    public function setFromFileUpload(UploadedFile $uploadedFile, $documentType, $access = 'private', array $details = null)
+    public function getFromFileUpload(UploadedFile $file, $documentType, $access = 'private', array $details = null)
     {
-        $fileGaufrette = new FileGaufrette($uploadedFile->getFilename(), $this->getFilesystem($access));
-        $fileGaufrette->setContent(file_get_contents($uploadedFile->getPathname()));
+        $fileSystem = new Filesystem(new LocalAdapter($file->getPath()));
 
-        return $this->getFromFileGaufrette($fileGaufrette, $documentType, $access, $details);
+        $fileReal = new FileGaufrette($file->getFilename(), $fileSystem);
+        $fileReal->setName($file->getClientOriginalName());
+
+        return $this->getFromFileGaufrette($fileReal, $fileSystem, $documentType, $access, $details);
     }
 
     /**
@@ -66,47 +74,28 @@ class FileBuilder
     }
 
     /**
-     * @param FileGaufrette $fileGaufrette
+     * @param FileGaufrette $fileReal
+     * @param Filesystem    $fileSystem
      * @param string        $documentType
      * @param string        $access
      * @param array         $details
      * @return File
      */
-    public function getFromFileGaufrette(FileGaufrette $fileGaufrette, $documentType, $access = 'private', array $details = null)
+    public function getFromFileGaufrette(FileGaufrette $fileReal, Filesystem $fileSystem, $documentType, $access = 'private', array $details = null)
     {
-        $mimeType = $this->getFilesystem($access)->mimeType($fileGaufrette->getKey());
-        $checkSum = $this->encoder->hash($fileGaufrette->getContent());
+        $mimeType = $fileSystem->mimeType($fileReal->getKey());
+        $checkSum = $this->encoder->hash($fileReal->getContent());
 
-        $file = new File($fileGaufrette);
+        $file = new File($fileReal);
         $file
             ->setAccess($access)
             ->setDetails($details)
             ->setType($documentType)
             ->setMimeType($mimeType)
-            ->setName($fileGaufrette->getName())
+            ->setName($fileReal->getName())
             ->setHash($checkSum)
-            ->setSize(floor($fileGaufrette->getSize() / 1000));
+            ->setSize(floor($fileReal->getSize() / 1000));
 
         return $file;
-    }
-
-    /**
-     * @return Filesystem
-     */
-    public function getPrivateFilesystem()
-    {
-        return $this->privateFilesystem;
-    }
-
-    /**
-     * @param Filesystem $privateFilesystem
-     *
-     * @return FileBuilder
-     */
-    public function setPrivateFilesystem($privateFilesystem)
-    {
-        $this->privateFilesystem = $privateFilesystem;
-
-        return $this;
     }
 }

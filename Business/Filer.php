@@ -39,6 +39,11 @@ class Filer
     protected $fileSystem;
 
     /**
+     * @var ImageManager
+     */
+    protected $imageManager;
+
+    /**
      * @var Router
      */
     protected $router;
@@ -74,14 +79,26 @@ class Filer
     protected $defaultImageFormat;
 
     /**
-     * Filer constructor.
+     * @param EncoderInterface      $encoder
+     * @param DocumentObjectManager $documentObjectManager
+     * @param ImageManager          $imageManager
+     * @param Router                $router
+     * @param FileSystem            $fileSystem
+     * @param string                $defaultImageFilter
      */
-    public function __construct()
+    public function __construct(EncoderInterface $encoder, DocumentObjectManager $documentObjectManager, ImageManager $imageManager, Router $router, FileSystem $fileSystem, $defaultImageFilter)
     {
         $this->fileMaxSize        = 50000;
         $this->imageMaxSize       = 10000;
         $this->defaultImageFormat = 'png';
+        $this->defaultImageFilter = $defaultImageFilter;
         $this->documentTypes      = [];
+
+        $this->documentObjectManager = $documentObjectManager;
+        $this->imageManager          = $imageManager;
+        $this->router                = $router;
+        $this->encoder               = $encoder;
+        $this->fileSystem            = $fileSystem;
     }
 
     /**
@@ -97,7 +114,6 @@ class Filer
     }
 
     /**
-     * getContainerBuilderMock
      * @return array
      */
     public function getDocumentTypes()
@@ -137,6 +153,18 @@ class Filer
     public function setDefaultImageFormat($format)
     {
         $this->defaultImageFormat = $format;
+
+        return $this;
+    }
+
+    /**
+     * @param string $filter
+     *
+     * @return $this
+     */
+    public function setDefaultImageFilter($filter)
+    {
+        $this->defaultImageFilter = $filter;
 
         return $this;
     }
@@ -274,6 +302,40 @@ class Filer
 
         $file = new File();
         $this->bindMetadata($file, $documentObject);
+
+        return $file;
+    }
+
+    /**
+     * @param File $file
+     * @return int
+     */
+    public function isImage(File $file)
+    {
+        return $this->imageManager->isImage($file->getMimeType());
+    }
+
+    /**
+     * @param File             $file
+     * @param ResizeParameters $params
+     * @return File|string
+     */
+    public function resize(File $file, ResizeParameters $params)
+    {
+        if ($this->isImage($file)) {
+            $mimeType = $file->getMimeType();
+
+            if ($params->getFilter() === null) {
+                $params->setFilter($this->defaultImageFilter);
+            }
+
+            $binary = $this->imageManager->createBinary(
+                $file->getContent(),
+                $mimeType
+            );
+
+            return $this->imageManager->filter($binary, $params);
+        }
 
         return $file;
     }

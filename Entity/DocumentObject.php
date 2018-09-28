@@ -3,7 +3,6 @@
 namespace Iad\Bundle\FilerTechBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * Class DocumentObject
@@ -16,19 +15,17 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 class DocumentObject
 {
 
-    use TimestampableEntity;
-
     const ACCESS_TYPE   = 'private';
     const ACCESS_PUBLIC = 'public';
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="id_document_object", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    private $idDocumentObject;
 
     /**
      * @var string
@@ -36,6 +33,13 @@ class DocumentObject
      * @ORM\Column(name="uuid", type="string")
      */
     private $uuid;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime")
+     */
+    private $createdAt;
 
     /**
      * @var string
@@ -112,15 +116,17 @@ class DocumentObject
      */
     public function __construct()
     {
+        $this->createdAt    = new \DateTime();
         $this->access       = self::ACCESS_TYPE;
     }
+
 
     /**
      * @return int
      */
-    public function getId()
+    public function getIdDocumentObject()
     {
-        return $this->id;
+        return $this->idDocumentObject;
     }
 
     /**
@@ -138,6 +144,25 @@ class DocumentObject
     public function setUuid($uuid)
     {
         $this->uuid = $uuid;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param \DateTime $createdAt
+     * @return $this
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }
@@ -278,7 +303,7 @@ class DocumentObject
     }
 
     /**
-     * @param integer $idUploader
+     * @param mixed $idUploader
      * @return $this
      */
     public function setIdUploader($idUploader)

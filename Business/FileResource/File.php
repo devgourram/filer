@@ -41,11 +41,11 @@ class File
     protected $name;
 
     /**
-     * @var string $documentType
+     * @var string $type
      * @JMS\Expose()
      * @JMS\Groups({"metadata"})
      */
-    protected $documentType;
+    protected $type;
 
     /**
      * @var string $uuid
@@ -55,11 +55,11 @@ class File
     protected $uuid;
 
     /**
-     * @var string $checksum
+     * @var string $hash
      * @JMS\Expose()
      * @JMS\Groups({"metadata"})
      */
-    protected $checksum;
+    protected $hash;
 
     /**
      * @var FileGaufrette
@@ -81,18 +81,11 @@ class File
     protected $url;
 
     /**
-     * @var string
-     */
-    protected $content;
-
-    /**
      * @param FileGaufrette $file
      */
     public function __construct(FileGaufrette $file = null)
     {
-        if ($file) {
-            $this->setFile($file);
-        }
+        $this->setFile($file);
     }
 
     /**
@@ -119,12 +112,9 @@ class File
      *
      * @return $this
      */
-    public function setFile(FileGaufrette $file)
+    public function setFile($file)
     {
         $this->file = $file;
-        if ($this->content) {
-            $this->file->setContent($this->content);
-        }
 
         return $this;
     }
@@ -172,19 +162,19 @@ class File
     /**
      * @return string
      */
-    public function getDocumentType()
+    public function getType()
     {
-        return $this->documentType;
+        return $this->type;
     }
 
     /**
-     * @param string $documentType
+     * @param string $type
      *
      * @return $this
      */
-    public function setDocumentType($documentType)
+    public function setType($type)
     {
-        $this->documentType = $documentType;
+        $this->type = $type;
 
         return $this;
     }
@@ -212,19 +202,19 @@ class File
     /**
      * @return string
      */
-    public function getChecksum()
+    public function getHash()
     {
-        return $this->checksum;
+        return $this->hash;
     }
 
     /**
-     * @param string $checksum
+     * @param string $hash
      *
      * @return $this
      */
-    public function setChecksum($checksum)
+    public function setHash($hash)
     {
-        $this->checksum = $checksum;
+        $this->hash = $hash;
 
         return $this;
     }
@@ -297,7 +287,7 @@ class File
             return $this->file->getContent();
         }
 
-        return $this->content;
+        return null;
     }
 
     /**
@@ -310,7 +300,6 @@ class File
         if ($this->file instanceof FileGaufrette) {
             $this->file->setContent($data);
         }
-        $this->content = $data;
 
         return $this;
     }
