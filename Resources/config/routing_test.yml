@@ -1,0 +1,4 @@
+iad_filer_document_upload:
+    pattern: /documents/
+    defaults: { _controller: IadFilerTechBundle:Test:postDocument }
+    methods: [GET, POST]

@@ -1,0 +1,20 @@
+iad_filer_document_download:
+    path: /documents/download/{uuid}
+    defaults: { _controller: IadFilerTechBundle:Filer:getDocument }
+    methods: GET
+    requirements:
+        uuid: "[a-zA-Z0-9-]+"
+
+iad_filer_document_metadata:
+    path: /documents/{uuid}/metadata
+    defaults: { _controller: IadFilerTechBundle:Filer:getDocumentData }
+    methods: GET
+    requirements:
+        uuid: "[a-zA-Z0-9-]+"
+
+iad_filer_document_object:
+    path: /documents/{uuid}
+    defaults: { _controller: IadFilerTechBundle:Filer:getDocumentObject }
+    methods: GET
+    requirements:
+        uuid: "[a-zA-Z0-9-]+"

@@ -1,0 +1,28 @@
+iad_filer_tech:
+    channels:
+        local:
+            adapter: local
+            enable_public: true
+            enable_private: true
+            public_path: "%filer_channel_local_public_path%"
+            private_path: "%filer_channel_local_private_path%"
+    avatar_filer:
+        channel: local
+
+
+liip_imagine:
+    filter_sets:
+        high:
+            quality: 90
+            filters:
+                thumbnail: { size: [2048, 1024], mode: inset }
+
+        medium:
+            quality: 80
+            filters:
+                thumbnail: { size: [1024, 512], mode: inset }
+
+        small:
+            quality: 75
+            filters:
+                thumbnail: { size: [256, 128], mode: inset }

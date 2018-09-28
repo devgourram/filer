@@ -1,0 +1,32 @@
+language: php
+
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+php:
+    - 5.6
+#    - nightly
+#    - hhvm
+#    - hhvm-nightly
+
+matrix:
+#    allow_failures:
+#        - php: nightly
+#        - php: hhvm
+#        - php: hhvm-nightly
+    fast_finish: true
+
+before_script:
+    - pyrus install pear/PHP_CodeSniffer
+    - phpenv rehash
+
+install:
+    - composer self-update 1.0.0-alpha10
+    - composer install
+
+script:
+    - phpunit
+    - vendor/bin/phpcs --standard=vendor/escapestudios/symfony2-coding-standard/Symfony2 --ignore=Tests,vendor .

@@ -1,0 +1,41 @@
+{
+  "name": "iad-holding/filer-tech-bundle",
+  "license": "proprietary",
+  "target-dir": "Iad/Bundle/FilerTechBundle",
+  "type": "project",
+  "description": "Filer bundle",
+
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://demo.iadholding.com/satis/",
+      "packagist": false
+    }
+  ],
+
+  "require": {
+    "php": ">=5.6",
+    "symfony/symfony": "~2.7",
+    "knplabs/knp-gaufrette-bundle": "~0.3",
+    "liip/imagine-bundle": "~1.3",
+
+    "iad-holding/core-bundle": "~1.1",
+    "iad-holding/db-tech-bundle": "dev-master"
+  },
+
+  "require-dev": {
+    "squizlabs/php_codesniffer": "~2.3.4",
+    "escapestudios/symfony2-coding-standard": "~2.7.0"
+  },
+
+  "autoload": {
+    "psr-0": {
+      "Iad\\Bundle\\FilerTechBundle": ""
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-FILER-23-insert-2": "2.0.x-dev"
+    }
+  }
+}

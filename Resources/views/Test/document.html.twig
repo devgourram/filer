@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" >
+    <head >
+        <meta charset='utf-8' />
+        <title>Test upload</title>
+    </head>
+    <body>
+        <h1>Upload test</h1>
+        <h2>Information</h2>
+        <div>
+            {% form_theme form 'form_table_layout.html.twig' %}
+            {{ form(form) }}
+        </div>
+
+        {% if errors|length %}
+            <h2>Errors</h2>
+            <div>
+                <ul>
+                    {% for error in errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        {% if response_filer %}
+            <h2>Response</h2>
+            <div>uuid: {{ response_filer.uuid }}</div>
+            <div>url: <a href="{{ response_filer.url }}">{{ response_filer.url }}</a></div>
+        {% endif %}
+
+        {% if metadata %}
+            <h2>Metadata</h2>
+            <table>
+                <tbody>
+                    <tr><td>Access</td><td>{{ metadata.access }}</td></tr>
+                    <tr><td>Size</td><td>{{ metadata.size }} ko</td></tr>
+                    <tr><td>Name</td><td>{{ metadata.name }}</td></tr>
+                    <tr><td>Type</td><td>{{ metadata.type }}</td></tr>
+                    <tr><td>Uuid</td><td>{{ metadata.uuid }}</td></tr>
+                    <tr><td>Hash</td><td>{{ metadata.hash }}</td></tr>
+                    <tr><td>MimeType</td><td>{{ metadata.mimeType }}</td></tr>
+                    <tr><td>Url</td><td>{{ metadata.url }}</td></tr>
+                    <tr>
+                        <td>Details</td>
+                        <td>
+                            <ul>
+                            {% for key, value in metadata.details %}
+                                <li>{{ key }}: {{ value }}</li>
+                            {% endfor %}
+                            </ul>
+                        </td>
+                </tbody>
+            </table>
+        {% endif %}
+    </body>
+</html>
