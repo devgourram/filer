@@ -54,6 +54,10 @@ class FilerAdaptersCompilerPass implements CompilerPassInterface
             if (isset($config[$businessFilerName]['public_base_url'])) {
                 $container->getDefinition($id)->addMethodCall('setPublicBaseUrl', [$config[$businessFilerName]['public_base_url']]);
             }
+
+            if (isset($config[$businessFilerName]['filer_class'])) {
+                $container->getDefinition($id)->addMethodCall('setClass', [$config[$businessFilerName]['filer_class']]);
+            }
         }
     }
 
@@ -65,6 +69,7 @@ class FilerAdaptersCompilerPass implements CompilerPassInterface
     private function getConfiguration(ContainerBuilder $container)
     {
         $configs       = $container->getExtensionConfig('iad_filer_tech');
+
         $configuration = new Configuration();
         $processor     = new Processor();
         $config        = $processor->processConfiguration($configuration, $configs);

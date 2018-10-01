@@ -113,6 +113,8 @@ class DocumentObject
     public function __construct()
     {
         $this->access       = self::ACCESS_TYPE;
+        $this->createdAt    = new \DateTime();
+        $this->updatedAt    = new \DateTime();
     }
 
     /**

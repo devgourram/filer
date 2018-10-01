@@ -1,29 +1,32 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: agourram
+ * Date: 01/10/18
+ * Time: 10:41
+ */
 
 namespace Iad\Bundle\FilerTechBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Iad\Bundle\FilerTechBundle\Repository\RealEstatePictureRepository")
- * @ORM\Table(
- *     name="filer_realestate_picture"
- * )
+ * @ORM\MappedSuperclass
+ *
+ * @package Iad\Bundle\FilerTechBundle\Entity
  */
-class RealEstatePicture
+abstract class Picture implements PictureInterface, FilableInterface
 {
     use TimestampableEntity;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
@@ -38,15 +41,6 @@ class RealEstatePicture
     protected $rank;
 
     /**
-     * @ORM\OneToMany(
-     *     targetEntity="Iad\Bundle\FilerTechBundle\Entity\RealEstatePictureFile",
-     *     mappedBy="realEstatePicture",
-     *     cascade={"persist", "remove"}
-     * )
-     */
-    private $files;
-
-    /**
      * @var UploadedFile $originalFile
      *
      * @Assert\File(
@@ -59,19 +53,38 @@ class RealEstatePicture
      */
     private $originalFile;
 
+
     /**
-     * RealEstatePicture constructor.
+     * @var PictureFileInterface|Collection
      */
+    protected $files;
+
+
     public function __construct()
     {
         $this->files = new ArrayCollection();
     }
 
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
-     * Get Title
-     *
-     * @return string
+     * @param int $id
+     * @return Picture
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
+     * @return mixed
      */
     public function getTitle()
     {
@@ -79,16 +92,12 @@ class RealEstatePicture
     }
 
     /**
-     * Set Title
-     *
-     * @param string $title
-     *
-     * @return RealEstatePicture
+     * @param mixed $title
+     * @return Picture
      */
     public function setTitle($title)
     {
         $this->title = $title;
-
         return $this;
     }
 
@@ -102,37 +111,16 @@ class RealEstatePicture
 
     /**
      * @param mixed $rank
-     * @return RealEstatePicture
+     * @return Picture
      */
     public function setRank($rank)
     {
         $this->rank = $rank;
-
         return $this;
     }
 
     /**
      * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param integer $id
-     *
-     * @return RealEstatePicture
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * @return ArrayCollection
      */
     public function getFiles()
     {
@@ -141,40 +129,35 @@ class RealEstatePicture
 
     /**
      * @param mixed $files
-     *
-     * @return RealEstatePicture
+     * @return Picture
      */
-    public function setFiles(ArrayCollection $files)
+    public function setFiles($files)
     {
         $this->files = $files;
-
         return $this;
     }
 
-
     /**
-     * @param RealEstatePictureFile $file
+     * @param PictureFile $file
      *
      * @return $this
      */
-    public function addFile(RealEstatePictureFile $file)
+    public function addFile(PictureFileInterface $file)
     {
         if ($this->files->contains($file) === false) {
-            if ($file->getRealEstatePicture() === null) {
-                $file->setRealEstatePicture($this);
-            }
             $this->files->add($file);
+            $file->setPicture($this);
         }
 
         return $this;
     }
 
     /**
-     * @param RealEstatePictureFile $file
+     * @param PictureFile $file
      *
      * @return $this
      */
-    public function removeFile(RealEstatePictureFile $file)
+    public function removeFile(PictureFileInterface $file)
     {
         if ($this->files->contains($file) === true) {
             $this->files->removeElement($file);
@@ -193,13 +176,12 @@ class RealEstatePicture
 
     /**
      * @param UploadedFile $originalFile
-     *
-     * @return RealEstatePicture
+     * @return Picture
      */
-    public function setOriginalFile(UploadedFile $originalFile)
+    public function setOriginalFile($originalFile)
     {
         $this->originalFile = $originalFile;
-
         return $this;
     }
+
 }

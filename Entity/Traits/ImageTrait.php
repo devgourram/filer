@@ -19,14 +19,14 @@ trait ImageTrait
      *
      * @ORM\Column(type="integer")
      */
-    private $height;
+    protected $height;
 
     /**
      * @var integer
      *
      * @ORM\Column(type="integer")
      */
-    private $width;
+    protected $width;
 
     /**
      * @var string
@@ -34,7 +34,7 @@ trait ImageTrait
      * @Assert\Length(max="50")
      * @ORM\Column(name="size_name", type="string", length=50)
      */
-    private $sizeName;
+    protected $sizeName;
 
     /**
      * @return int

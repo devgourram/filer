@@ -15,11 +15,8 @@ trait FilerTrait
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var DocumentObject
@@ -30,7 +27,7 @@ trait FilerTrait
      * )
      * @ORM\JoinColumn(name="id_document_object", referencedColumnName="id")
      */
-    private $documentObject;
+    protected $documentObject;
 
     /**
      * @return int

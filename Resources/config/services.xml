@@ -7,11 +7,7 @@
     <!-- Filer service -->
     <services>
         <service id="iad_filer.manager.document_object" class="Iad\Bundle\FilerTechBundle\Manager\DocumentObjectManager" parent="iad_core.manager.paginate.abstract" />
-        <service id="iad_filer.manager.avatar" class="Iad\Bundle\FilerTechBundle\Manager\AvatarManager" parent="iad_core.manager.paginate.abstract" />
-        <service id="iad_filer.manager.real_estate_picture" class="Iad\Bundle\FilerTechBundle\Manager\RealEstatePictureManager" parent="iad_core.manager.paginate.abstract"/>
-        <service id="iad_filer.manager.event_picture" class="Iad\Bundle\FilerTechBundle\Manager\EventPictureManager" parent="iad_core.manager.paginate.abstract"/>
-        <service id="iad_filer.manager.trainingpole_picture" class="Iad\Bundle\FilerTechBundle\Manager\TrainingPolePictureManager" parent="iad_core.manager.paginate.abstract"/>
-        <service id="iad_filer.manager.administrative_document" class="Iad\Bundle\FilerTechBundle\Manager\AdministrativeDocumentManager" parent="iad_core.manager.paginate.abstract"/>
+        <service id="iad_filer.manager.picture" class="Iad\Bundle\FilerTechBundle\Manager\PictureManager" parent="iad_core.manager.paginate.abstract"/>
 
         <service id="iad_filer.encoder" class="Iad\Bundle\FilerTechBundle\Business\Encoder" />
 
@@ -25,41 +21,12 @@
             <argument type="service" id="router" />
         </service>
 
-        <service id="iad_filer.avatar_filer" class="Iad\Bundle\FilerTechBundle\Business\Service\AvatarFiler">
+        <service id="iad_filer.picture_filer" class="Iad\Bundle\FilerTechBundle\Business\Service\PictureFiler">
             <tag name="iad_filer.business.service" />
-            <factory service="iad_filer.filer_factory" method="createAvatarFiler" />
-            <call method="setAvatarManager">
-                <argument type="service" id="iad_filer.manager.avatar" />
-            </call>
+            <argument type="service" id="iad_filer.manager.picture" />
+            <argument type="service" id="iad_filer.image.manager" />
+            <argument type="service" id="iad_filer.encoder" />
         </service>
 
-        <service id="iad_filer.realestate_picture_filer" class="Iad\Bundle\FilerTechBundle\Business\Service\RealEstatePictureFiler">
-            <tag name="iad_filer.business.service" />
-            <factory service="iad_filer.filer_factory" method="createRealEstatePictureFiler" />
-            <call method="setRealEstatePictureManager">
-                <argument type="service" id="iad_filer.manager.real_estate_picture" />
-            </call>
-        </service>
-
-        <service id="iad_filer.event_picture_filer" class="Iad\Bundle\FilerTechBundle\Business\Service\EventPictureFiler">
-            <tag name="iad_filer.business.service" />
-            <factory service="iad_filer.filer_factory" method="createEventPictureFiler" />
-            <call method="setEventPictureManager">
-                <argument type="service" id="iad_filer.manager.event_picture" />
-            </call>
-        </service>
-
-        <service id="iad_filer.training_pole_picture_filer" class="Iad\Bundle\FilerTechBundle\Business\Service\TrainingPolePictureFiler">
-            <tag name="iad_filer.business.service" />
-            <factory service="iad_filer.filer_factory" method="createTrainingPolePictureFiler" />
-            <call method="setTrainingPolePictureManager">
-                <argument type="service" id="iad_filer.manager.trainingpole_picture" />
-            </call>
-        </service>
-
-        <service id="iad_filer.administrative_document_filer" class="Iad\Bundle\FilerTechBundle\Business\Service\AdministrativeDocumentFiler">
-            <tag name="iad_filer.business.service" />
-            <factory service="iad_filer.filer_factory" method="createAdministrativeDocumentFiler" />
-        </service>
     </services>
 </container>
