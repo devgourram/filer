@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class ResizeParametersType
+ *
  * @package Iad\Bundle\FilerTechBundle\Form\Type
  */
 class ResizeParametersType extends AbstractType
@@ -30,9 +31,7 @@ class ResizeParametersType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'csrf_protection' => false,
-        ]);
+        $resolver->setDefaults(['csrf_protection' => false]);
     }
 
     /**

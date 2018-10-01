@@ -1,42 +1,37 @@
 {
   "name": "iad-holding/filer-tech-bundle",
   "license": "proprietary",
+  "target-dir": "Iad/Bundle/FilerTechBundle",
   "type": "project",
   "description": "Filer bundle",
-  "target-dir": "Iad/Bundle/FilerTechBundle",
+  "minimum-stability": "dev",
   "repositories": [
     {
       "type": "composer",
-      "url": "https://demo.iadholding.com/satis/",
-      "packagist": false
+      "url": "https://satisduhautdesramparts:L2sN9C7S4PpkrRrj369u@demo.iadholding.com/satis/"
     }
   ],
 
   "require": {
     "php": ">=5.6",
-    "symfony/symfony": "~3.4",
-    "knplabs/knp-gaufrette-bundle": "~0.5",
-    "liip/imagine-bundle": "~1.0",
-
-    "iad-holding/core-bundle": "dev-project/AR-42-migration-sf3.4"
+    "symfony/symfony": "~2.7",
+    "knplabs/knp-gaufrette-bundle": "~0.3",
+    "liip/imagine-bundle": "~1.3",
+    "twig/twig": "~1.3",
+    "symfony/http-foundation": "^2.7",
+    "iad-holding/core-bundle": "dev-develop"
   },
 
   "require-dev": {
     "squizlabs/php_codesniffer": "~2.3.4",
     "escapestudios/symfony2-coding-standard": "~2.7.0",
-    "phpunit/phpunit": "~5.7",
-    "symfony/phpunit-bridge": "^4.1"
+    "phpunit/phpunit": "~4.1",
+    "php-mock/php-mock": "^1.0"
   },
 
   "autoload": {
     "psr-0": {
       "Iad\\Bundle\\FilerTechBundle": ""
     }
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-FILER-23-insert-2": "2.0.x-dev"
-    }
   }
 }
-

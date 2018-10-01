@@ -4,6 +4,7 @@ namespace Iad\Bundle\FilerTechBundle\Business\Exception;
 
 /**
  * Class DocumentTypeException
+ *
  * @package Iad\Bundle\FilerTechBundle\Business\Exception
  */
 class DocumentTypeException extends \Exception

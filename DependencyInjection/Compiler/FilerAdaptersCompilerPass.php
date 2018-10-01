@@ -27,7 +27,7 @@ class FilerAdaptersCompilerPass implements CompilerPassInterface
         foreach ($taggedServices as $id => $tags) {
             $businessFilerName = str_replace('iad_filer.', '', $id);
 
-            if (!isset($config[$businessFilerName]) || (!isset($config['channels'][$config[$businessFilerName]['channel']]))) {
+            if (!isset($config[$businessFilerName]) || !isset($config['channels'][$config[$businessFilerName]['channel']])) {
                 throw new InvalidConfigurationException(
                     sprintf("missing channel configuration for business filer service <%s>", $businessFilerName)
                 );
@@ -41,6 +41,18 @@ class FilerAdaptersCompilerPass implements CompilerPassInterface
 
             if ($config['channels'][$businessChannel]['enable_private']) {
                 $this->injectPrivateFileSystem($container, $businessChannel, $id);
+            }
+
+            if (isset($config[$businessFilerName]['resizing_filters'])) {
+                $container->getDefinition($id)->addMethodCall('setResizingFilters', [$config[$businessFilerName]['resizing_filters']]);
+            }
+
+            if (isset($config[$businessFilerName]['watermark_filter'])) {
+                $container->getDefinition($id)->addMethodCall('setWaterMarkFilter', [$config[$businessFilerName]['watermark_filter']]);
+            }
+
+            if (isset($config[$businessFilerName]['public_base_url'])) {
+                $container->getDefinition($id)->addMethodCall('setPublicBaseUrl', [$config[$businessFilerName]['public_base_url']]);
             }
         }
     }
@@ -89,19 +101,23 @@ class FilerAdaptersCompilerPass implements CompilerPassInterface
     private function injectFileSystem(ContainerBuilder $container, $access, $businessChannel, $serviceId)
     {
         if (in_array($access, ['public', 'private']) === false) {
-            throw new \InvalidArgumentException(sprintf(
-                "invalid visibility parameter, must be public or private, %s given",
-                $access
-            ));
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "invalid visibility parameter, must be public or private, %s given",
+                    $access
+                )
+            );
         }
 
         if ($container->has('iad_filer.adapter.'.$businessChannel.'.'.$access) === false) {
-            throw new InvalidDefinitionException(sprintf(
-                "missing %s channel service definition <%s> for service <%s>",
-                $access,
-                'iad_filer.adapter.'.$businessChannel.'.private',
-                $serviceId
-            ));
+            throw new InvalidDefinitionException(
+                sprintf(
+                    "missing %s channel service definition <%s> for service <%s>",
+                    $access,
+                    'iad_filer.adapter.'.$businessChannel.'.'.$access,
+                    $serviceId
+                )
+            );
         }
         $method = 'set'.ucfirst($access).'Filesystem';
         $definition = $container->getDefinition($serviceId);

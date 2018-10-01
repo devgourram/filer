@@ -4,6 +4,7 @@ namespace Iad\Bundle\FilerTechBundle\Business\Exception;
 
 /**
  * Class DocumentMimeTypeException
+ *
  * @package Iad\Bundle\FilerTechBundle\Business\Exception
  */
 class DocumentMimeTypeException extends \Exception

@@ -2,12 +2,13 @@
 
 namespace Iad\Bundle\FilerTechBundle\Business\FileResource;
 
-use Gaufrette\File as FileGaufrette;
 use JMS\Serializer\Annotation as JMS;
 
 /**
  * Class File
+ *
  * @package Iad\Bundle\FilerTechBundle\Business\FileResource
+ *
  * @JMS\ExclusionPolicy("all")
  */
 class File
@@ -41,11 +42,11 @@ class File
     protected $name;
 
     /**
-     * @var string $type
+     * @var string $documentType
      * @JMS\Expose()
      * @JMS\Groups({"metadata"})
      */
-    protected $type;
+    protected $documentType;
 
     /**
      * @var string $uuid
@@ -55,16 +56,16 @@ class File
     protected $uuid;
 
     /**
-     * @var string $hash
+     * @var string $checksum
      * @JMS\Expose()
      * @JMS\Groups({"metadata"})
      */
-    protected $hash;
+    protected $checksum;
 
     /**
-     * @var FileGaufrette
+     * @var string
      */
-    protected $file;
+    protected $fullName;
 
     /**
      * @var string
@@ -81,12 +82,19 @@ class File
     protected $url;
 
     /**
-     * @param FileGaufrette $file
+     * @var string
      */
-    public function __construct(FileGaufrette $file = null)
-    {
-        $this->setFile($file);
-    }
+    protected $content;
+
+    /**
+     * @var integer $width
+     */
+    protected $width;
+
+    /**
+     * @var integer $height
+     */
+    protected $height;
 
     /**
      * @JMS\VirtualProperty
@@ -97,26 +105,6 @@ class File
     public function getBase64Content()
     {
         return base64_encode($this->getContent());
-    }
-
-    /**
-     * @return FileGaufrette
-     */
-    public function getFile()
-    {
-        return $this->file;
-    }
-
-    /**
-     * @param FileGaufrette $file
-     *
-     * @return $this
-     */
-    public function setFile($file)
-    {
-        $this->file = $file;
-
-        return $this;
     }
 
     /**
@@ -162,19 +150,19 @@ class File
     /**
      * @return string
      */
-    public function getType()
+    public function getDocumentType()
     {
-        return $this->type;
+        return $this->documentType;
     }
 
     /**
-     * @param string $type
+     * @param string $documentType
      *
      * @return $this
      */
-    public function setType($type)
+    public function setDocumentType($documentType)
     {
-        $this->type = $type;
+        $this->documentType = $documentType;
 
         return $this;
     }
@@ -202,19 +190,19 @@ class File
     /**
      * @return string
      */
-    public function getHash()
+    public function getChecksum()
     {
-        return $this->hash;
+        return $this->checksum;
     }
 
     /**
-     * @param string $hash
+     * @param string $checksum
      *
      * @return $this
      */
-    public function setHash($hash)
+    public function setChecksum($checksum)
     {
-        $this->hash = $hash;
+        $this->checksum = $checksum;
 
         return $this;
     }
@@ -283,11 +271,7 @@ class File
      */
     public function getContent()
     {
-        if ($this->file instanceof FileGaufrette) {
-            return $this->file->getContent();
-        }
-
-        return null;
+        return $this->content;
     }
 
     /**
@@ -297,9 +281,7 @@ class File
      */
     public function setContent($data)
     {
-        if ($this->file instanceof FileGaufrette) {
-            $this->file->setContent($data);
-        }
+        $this->content = $data;
 
         return $this;
     }
@@ -320,6 +302,66 @@ class File
     public function setUrl($url)
     {
         $this->url = $url;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFullName()
+    {
+        return $this->fullName;
+    }
+
+    /**
+     * @param string $fullName
+     *
+     * @return File
+     */
+    public function setFullName($fullName)
+    {
+        $this->fullName = $fullName;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getWidth()
+    {
+        return $this->width;
+    }
+
+    /**
+     * @param int $width
+     *
+     * @return File
+     */
+    public function setWidth($width)
+    {
+        $this->width = $width;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getHeight()
+    {
+        return $this->height;
+    }
+
+    /**
+     * @param int $height
+     *
+     * @return File
+     */
+    public function setHeight($height)
+    {
+        $this->height = $height;
 
         return $this;
     }

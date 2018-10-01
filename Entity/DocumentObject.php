@@ -3,11 +3,12 @@
 namespace Iad\Bundle\FilerTechBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * Class DocumentObject
  *
- * @ORM\Table(name="document_object")
+ * @ORM\Table(name="filer_document_object")
  * @ORM\Entity
  *
  * @package Iad\Bundle\FilerTechBundle\Entity
@@ -15,17 +16,19 @@ use Doctrine\ORM\Mapping as ORM;
 class DocumentObject
 {
 
+    use TimestampableEntity;
+
     const ACCESS_TYPE   = 'private';
     const ACCESS_PUBLIC = 'public';
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="id_document_object", type="integer")
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idDocumentObject;
+    private $id;
 
     /**
      * @var string
@@ -33,13 +36,6 @@ class DocumentObject
      * @ORM\Column(name="uuid", type="string")
      */
     private $uuid;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="created_at", type="datetime")
-     */
-    private $createdAt;
 
     /**
      * @var string
@@ -116,17 +112,15 @@ class DocumentObject
      */
     public function __construct()
     {
-        $this->createdAt    = new \DateTime();
         $this->access       = self::ACCESS_TYPE;
     }
-
 
     /**
      * @return int
      */
-    public function getIdDocumentObject()
+    public function getId()
     {
-        return $this->idDocumentObject;
+        return $this->id;
     }
 
     /**
@@ -144,25 +138,6 @@ class DocumentObject
     public function setUuid($uuid)
     {
         $this->uuid = $uuid;
-
-        return $this;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @param \DateTime $createdAt
-     * @return $this
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
 
         return $this;
     }
@@ -303,7 +278,7 @@ class DocumentObject
     }
 
     /**
-     * @param mixed $idUploader
+     * @param integer $idUploader
      * @return $this
      */
     public function setIdUploader($idUploader)

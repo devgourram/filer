@@ -1,0 +1,12 @@
+iad_filer:
+    validation:
+       realEstate:
+           pictures:
+              type:     "Ce type de fichier n'est pas une image valide. Les extensions valides sont : gif, jpeg, png."
+              size:     "L'image que vous avez inséré est trop grande (> 5Mo). Merci de réduire sa taille avant de l'insérer à nouveau"
+       event:
+           pictures:
+              type:     "Ce type de fichier n'est pas une image valide. Les extensions valides sont : gif, jpeg, png."
+              size:     "L'image que vous avez inséré est trop grande (> 5Mo). Merci de réduire sa taille avant de l'insérer à nouveau"
+       admdocument:
+           size: "La taille du document que vous avez inséré est trop grande (>= 20Mo)."

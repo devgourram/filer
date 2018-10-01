@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
 
 /**
  * Class ImageManager
+ *
  * @package Iad\Bundle\FilerTechBundle\Business
  */
 class ImageManager
@@ -36,15 +37,17 @@ class ImageManager
     }
 
     /**
-     * @param Binary           $binary
-     * @param ResizeParameters $params
-     * @return string
+     * @param Binary $binary
+     * @param string $filter
+     * @param array  $runtimeConfig
+     *
+     * @return \Liip\ImagineBundle\Binary\BinaryInterface
      */
-    public function filter(Binary $binary, ResizeParameters $params)
+    public function filter(Binary $binary, $filter, $runtimeConfig = [])
     {
-        $filteredBinary = $this->filterManager->applyFilter($binary, $params->getFilter(), $params->getFilterRuntimeConfig());
+        $filteredBinary = $this->filterManager->applyFilter($binary, $filter, $runtimeConfig);
 
-        return $filteredBinary->getContent();
+        return $filteredBinary;
     }
 
     /**
@@ -63,5 +66,23 @@ class ImageManager
             $mimeType,
             $format
         );
+    }
+
+    /**
+     * @return \Liip\ImagineBundle\Imagine\Filter\FilterConfiguration
+     */
+    public function getFilterConfiguration()
+    {
+        return $this->filterManager->getFilterConfiguration();
+    }
+
+    /**
+     * @param string $filter
+     *
+     * @return array
+     */
+    public function getFilterParameters($filter)
+    {
+        return $this->filterManager->getFilterConfiguration()->get($filter);
     }
 }

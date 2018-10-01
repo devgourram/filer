@@ -2,11 +2,15 @@
 
 namespace Iad\Bundle\FilerTechBundle\Business;
 
+use Doctrine\ORM\EntityManager;
+use Gaufrette\Exception\FileNotFound;
 use Gaufrette\Filesystem;
 use Iad\Bundle\FilerTechBundle\Business\FileResource\File;
 use Iad\Bundle\FilerTechBundle\Business\FileResource\FileBuilder;
 use Iad\Bundle\FilerTechBundle\Entity\DocumentObject;
-use Iad\Bundle\FilerTechBundle\Manager\DocumentObjectManager;
+use Liip\ImagineBundle\Binary\BinaryInterface;
+use Liip\ImagineBundle\Model\Binary;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Gaufrette\File as FileGaufrette;
@@ -29,17 +33,17 @@ abstract class AbstractFiler
     protected $documentType = '';
 
     /**
-     * @var DocumentObjectManager $documentObjectManager
+     * @var EntityManager $entityManager
      */
-    protected $documentObjectManager;
+    protected $entityManager;
 
     /**
-     * @var FileBuilder $fileBuilder
+     * @var FileBuilder $privateFileBuilder
      */
     protected $privateFileBuilder;
 
     /**
-     * @var FileBuilder $fileBuilder
+     * @var FileBuilder $publicFileBuilder
      */
     protected $publicFileBuilder;
 
@@ -58,6 +62,15 @@ abstract class AbstractFiler
      */
     protected $encoder;
 
+    /**
+     * @var string $publicBaseUrl
+     */
+    protected $publicBaseUrl;
+
+    /**
+     * @var Router $router
+     */
+    protected $router;
 
     /**
      * AbstractFiler constructor.
@@ -66,7 +79,7 @@ abstract class AbstractFiler
      */
     public function __construct(Encoder $encoder)
     {
-        $this->encoder     = $encoder;
+        $this->encoder = $encoder;
     }
 
     /**
@@ -125,21 +138,21 @@ abstract class AbstractFiler
     }
 
     /**
-     * @return DocumentObjectManager
+     * @return EntityManager
      */
-    public function getDocumentObjectManager()
+    public function getEntityManager()
     {
-        return $this->documentObjectManager;
+        return $this->entityManager;
     }
 
     /**
-     * @param DocumentObjectManager $documentObjectManager
+     * @param EntityManager $entityManager
      *
      * @return AbstractFiler
      */
-    public function setDocumentObjectManager($documentObjectManager)
+    public function setEntityManager(EntityManager $entityManager)
     {
-        $this->documentObjectManager = $documentObjectManager;
+        $this->entityManager = $entityManager;
 
         return $this;
     }
@@ -157,7 +170,7 @@ abstract class AbstractFiler
      *
      * @return AbstractFiler
      */
-    public function setEncoder($encoder)
+    public function setEncoder(Encoder $encoder)
     {
         $this->encoder = $encoder;
 
@@ -165,62 +178,83 @@ abstract class AbstractFiler
     }
 
     /**
+     * extract data from uploadedFile, create FileGaufrette and persist file in the filesystem
+     *
+     * @param File         $file
      * @param UploadedFile $uploadedFile
      * @param string       $access
-     * @param string       $details
+     * @param array        $details
      *
      * @return File
      */
-    public function createFile(UploadedFile $uploadedFile, $access, $details)
+    public function processFile(File $file, UploadedFile $uploadedFile, $access, $details = null)
     {
-        $content          = file_get_contents($uploadedFile->getPathname());
-        $uuid             = $this->encoder->uuid($content);
-        $checkSum         = $this->encoder->hash($content);
+        $content  = file_get_contents($uploadedFile->getPathname());
+        $uuid     = $this->encoder->uuid($content);
+        $checkSum = $this->encoder->hash($content);
 
-        $file = new File();
+        $fileGaufrette = $this->createFileGaufrette($uuid, $uploadedFile->getMimeType(), $content, $access);
+
         $file
             ->setMimeType($uploadedFile->getMimeType())
-            ->setSize($uploadedFile->getSize())
+            ->setSize($fileGaufrette->getSize())
             ->setName($uploadedFile->getClientOriginalName())
             ->setUuid($uuid)
             ->setChecksum($checkSum)
-            ->setContent($content)
+            ->setContent($fileGaufrette->getContent())
             ->setDocumentType($this->documentType)
             ->setDetails($details)
             ->setAccess($access)
-        ;
+            ->setFullName($fileGaufrette->getKey());
 
         return $file;
     }
 
     /**
-     * @param File   $file
+     * @param string $uuid
+     * @param string $mimetype
+     * @param string $content
      * @param string $access
      *
      * @return FileGaufrette
      */
-    public function createFileGaufrette(File $file, $access = 'private')
+    public function createFileGaufrette($uuid, $mimetype, $content, $access)
     {
         $extensionGuesser = ExtensionGuesser::getInstance();
-        $extension        = $extensionGuesser->guess($file->getMimeType());
-        $fileName         = $file->getUuid().($extension?'.'.$extension:'');
-        $fullName         = $this->directoryPrefix.$fileName;
+        $extension        = $extensionGuesser->guess($mimetype);
 
-        $fileGaufrette    = new FileGaufrette($fullName, $this->getFilesystem($access));
+        $fileName = $uuid.($extension ? '.'.$extension : '');
+        $fullName = $this->directoryPrefix.$fileName;
+
+        $fileGaufrette = new FileGaufrette($fullName, $this->getFilesystem($access));
+
+        $fileGaufrette->setContent($content);
 
         return $fileGaufrette;
     }
 
     /**
-     * @param File          $file
-     * @param FileGaufrette $fileGaufrette
-     * @param integer       $peopleId
+     * @param string $filename
+     * @param string $access
+     *
+     * @return FileGaufrette
+     */
+    public function loadFileGaufrette($filename, $access)
+    {
+        $fileGaufrette = new FileGaufrette($filename, $this->getFilesystem($access));
+
+        return $fileGaufrette;
+    }
+
+    /**
+     * @param File    $file
+     * @param integer $idPeople
      *
      * @return DocumentObject
      */
-    public function createDocumentObject(File $file, FileGaufrette $fileGaufrette, $peopleId)
+    public function createDocumentObject(File $file, $idPeople)
     {
-        $documentObject = $this->getDocumentObjectManager()->create();
+        $documentObject = new DocumentObject();
         $documentObject
             ->setUuid($file->getUuid())
             ->setMimeType($file->getMimeType())
@@ -228,12 +262,171 @@ abstract class AbstractFiler
             ->setCheckSum($file->getChecksum())
             ->setDetails($file->getDetails())
             ->setDocumentType($file->getDocumentType())
-            ->setFullName($fileGaufrette->getKey())
+            ->setFullName($file->getFullName())
             ->setSize($file->getSize())
             ->setOriginalName($file->getName())
             ->setPathDirectory($this->directoryPrefix)
-            ->setIdUploader($peopleId);
+            ->setIdUploader($idPeople);
 
         return $documentObject;
+    }
+
+    /**
+     * @param DocumentObject $documentObject
+     *
+     * @return File
+     */
+    public function createFileFromEntity(DocumentObject $documentObject)
+    {
+        $file          = $this->getFileFromEntity($documentObject);
+        $fileGaufrette = $this->loadFileGaufrette($documentObject->getFullName(), $documentObject->getAccess());
+
+        $file->setContent($fileGaufrette->getContent());
+
+        return $file;
+    }
+
+    /**
+     * @param DocumentObject $documentObject
+     *
+     * @return bool
+     */
+    public function deleteFromEntity(DocumentObject $documentObject)
+    {
+        $fileGaufrette = $this->loadFileGaufrette($documentObject->getFullName(), $documentObject->getAccess());
+
+        return $fileGaufrette->delete();
+    }
+
+    /**
+     * @param DocumentObject $documentObject
+     *
+     * @return File
+     */
+    public function getFileFromEntity(DocumentObject $documentObject)
+    {
+        $file = new File();
+        $file
+            ->setMimeType($documentObject->getMimeType())
+            ->setSize($documentObject->getSize())
+            ->setName($documentObject->getOriginalName())
+            ->setUuid($documentObject->getUuid())
+            ->setChecksum($documentObject->getCheckSum())
+            ->setDocumentType($documentObject->getDocumentType())
+            ->setDetails($documentObject->getDetails())
+            ->setAccess($documentObject->getAccess());
+
+        return $file;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPublicBaseUrl()
+    {
+        return $this->publicBaseUrl;
+    }
+
+    /**
+     * @param string $publicBaseUrl
+     *
+     * @return AbstractFiler
+     */
+    public function setPublicBaseUrl($publicBaseUrl)
+    {
+        $this->publicBaseUrl = $publicBaseUrl;
+
+        return $this;
+    }
+
+    /**
+     * @return Router
+     */
+    public function getRouter()
+    {
+        return $this->router;
+    }
+
+    /**
+     * @param Router $router
+     *
+     * @return AbstractFiler
+     */
+    public function setRouter($router)
+    {
+        $this->router = $router;
+
+        return $this;
+    }
+
+    /**
+     * @param DocumentObject $documentObject
+     * @param bool           $force
+     *
+     * @return bool
+     */
+    public function deleteDocument(DocumentObject $documentObject, $force = false)
+    {
+        try {
+            return $this->deleteFromEntity($documentObject);
+        } catch (FileNotFound $e) {
+            if (!$force) {
+                throw $e;
+            }
+        }
+    }
+
+    /**
+     * @param mixed  $content
+     * @param string $mimeType
+     *
+     * @return Binary
+     */
+    public function createBinary($content, $mimeType = null)
+    {
+        if (!$mimeType) {
+            $fileInfo = new \finfo(FILEINFO_MIME_TYPE);
+            $mimeType = $fileInfo->buffer($content);
+        }
+
+        $extensionGuesser = ExtensionGuesser::getInstance();
+        $format           = $extensionGuesser->guess($mimeType);
+
+        return new Binary(
+            $content,
+            $mimeType,
+            $format
+        );
+    }
+
+    /**
+     * @param File            $file
+     * @param BinaryInterface $binary
+     * @param string          $access
+     *
+     * @return File
+     */
+    protected function setFileFromBinary(File $file, BinaryInterface $binary, $access)
+    {
+        $content       = $binary->getContent();
+        $uuid          = $this->encoder->uuid($content);
+        $checkSum      = $this->encoder->hash($content);
+        $fileGaufrette = $this->createFileGaufrette(
+            $uuid,
+            $binary->getMimeType(),
+            $content,
+            $access
+        );
+        $file
+            ->setMimeType($binary->getMimeType())
+            ->setSize($fileGaufrette->getSize())
+            ->setUuid($uuid)
+            ->setChecksum($checkSum)
+            ->setContent($fileGaufrette->getContent())
+            ->setDocumentType($this->documentType)
+            ->setAccess($access)
+            ->setFullName($fileGaufrette->getKey());
+
+        return $file;
     }
 }

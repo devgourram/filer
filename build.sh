@@ -1,5 +1,10 @@
 #!/bin/bash
 echo "Debut du build"
+branch=$(echo $1 | sed "s/origin\///g")
+git fetch -p origin
+git checkout $branch
+git reset --hard origin/$branch
+
 echo "Composer update"
 /usr/sbin/composer -v update --no-interaction --prefer-dist
 if [ "$?" != "0" ]; then

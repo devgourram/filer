@@ -4,6 +4,7 @@ namespace Iad\Bundle\FilerTechBundle\Business;
 
 /**
  * Interface EncoderInterface
+ *
  * @package Iad\Bundle\FilerTechBundle\Business
  */
 interface EncoderInterface

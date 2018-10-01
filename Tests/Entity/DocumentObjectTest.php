@@ -21,7 +21,7 @@ class DocumentObjectTest extends \PHPUnit_Framework_TestCase
      */
     public function testAccessor()
     {
-        $documentObject= new DocumentObject();
+        $documentObject = new DocumentObject();
 
         $now        = new \DateTime();
         $uuid       = hash('sha256', 'Test du sha256 pour les filers');
@@ -29,12 +29,11 @@ class DocumentObjectTest extends \PHPUnit_Framework_TestCase
 
         $className = 'Iad\Bundle\FilerTechBundle\Entity\DocumentObject';
 
-        $this->assertNull($documentObject->getIdDocumentObject());
+        $this->assertNull($documentObject->getId());
 
         $this->assertInstanceOf($className, $documentObject->setUuid($uuid));
         $this->assertEquals($uuid, $documentObject->getUuid());
 
-        $this->assertInstanceOf('DateTime', $documentObject->getCreatedAt());
         $this->assertInstanceOf($className, $documentObject->setCreatedAt($now));
         $this->assertEquals($now, $documentObject->getCreatedAt());
 
@@ -56,9 +55,6 @@ class DocumentObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf($className, $documentObject->setOriginalName('full-file_name'));
         $this->assertEquals('full-file_name', $documentObject->getOriginalName());
 
-        $this->assertInstanceOf($className, $documentObject->setIdUploader('caller'));
-        $this->assertEquals('caller', $documentObject->getIdUploader());
-
         $this->assertInstanceOf($className, $documentObject->setPathDirectory('/dir/to/file/name'));
         $this->assertEquals('/dir/to/file/name', $documentObject->getPathDirectory());
 
@@ -74,8 +70,7 @@ class DocumentObjectTest extends \PHPUnit_Framework_TestCase
      */
     public function testWrongAccess()
     {
-        $documentObject= new DocumentObject();
-
+        $documentObject = new DocumentObject();
         $documentObject->setAccess('unknown');
     }
 }

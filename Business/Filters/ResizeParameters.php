@@ -1,11 +1,12 @@
 <?php
 
-namespace Iad\Bundle\FilerTechBundle\Business;
+namespace Iad\Bundle\FilerTechBundle\Business\Filters;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class ResizeParameters
+ *
  * @package Iad\Bundle\FilerTechBundle\Business
  */
 class ResizeParameters
@@ -66,10 +67,10 @@ class ResizeParameters
     /**
      * Construct
      */
-    public function __construct($filter, $size)
+    public function __construct()
     {
-        $this->filter  = $filter;
-        $this->size    = $size;
+        $this->filter  = null;
+        $this->size    = null;
         $this->quality = 70;
         $this->mode    = 'inset';
     }

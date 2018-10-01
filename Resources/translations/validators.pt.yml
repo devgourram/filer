@@ -1,0 +1,12 @@
+iad_filer:
+    validation:
+       realEstate:
+           pictures:
+              type:     "Este tipo de arquivo não é uma imagem válida. Extensões válidos: git, jpeg, png."
+              size:     "A imagem que inseriu é demasiado grande ( > 5MB). Agradecemos que reduza o seu tamanho antes de a inserir novamente."
+       event:
+           pictures:
+              type:     "Este tipo de arquivo não é uma imagem válida. Extensões válidos: git, jpeg, png."
+              size:     "A imagem que inseriu é demasiado grande ( > 5MB). Agradecemos que reduza o seu tamanho antes de a inserir novamente."
+       admdocument:
+           size: "O tamanho do documento que você inseriu é muito grande (>= 20 MB)."

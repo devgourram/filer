@@ -1,0 +1,4 @@
+iad_filer_rest_avatar_uploader:
+    path:   /avatar/uploader
+    defaults: { _controller: IadFilerTechBundle:Filer:uploadAvatar }
+    methods: [POST]

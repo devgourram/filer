@@ -4,23 +4,54 @@ iad_filer_tech:
             adapter: local
             enable_public: true
             enable_private: true
-            public_path: /tmp/public
-            private_path: /tmp/public
-
+            public_path: "%filer_channel_local_public_path%"
+            private_path: "%filer_channel_local_private_path%"
+    avatar_filer:
+        channel: local
+        resizing_filters: ['small']
+        public_base_url: "%filer_avatar_base_url%"
+    realestate_picture_filer:
+        channel: local
+        resizing_filters: ['high']
+        watermark_filter: 'watermark'
+        public_base_url: "%filer_realestate_base_url%"
+    event_picture_filer:
+        channel: local
+        resizing_filters: ['high', 'medium']
+        public_base_url: "%filer_event_base_url%"
+    training_pole_picture_filer:
+        channel: local
+        resizing_filters: ['high', 'medium']
+        public_base_url: "%filer_training_pole_base_url%"
+    administrative_document_filer:
+        channel: local
 
 liip_imagine:
+    driver: imagick
     filter_sets:
         high:
             quality: 90
             filters:
-                thumbnail: { size: [2048, 1024], mode: inset }
+                thumbnail: { size: [800, 600], mode: inset }
 
         medium:
-            quality: 80
+            quality: 90
             filters:
-                thumbnail: { size: [1024, 512], mode: inset }
+                thumbnail: { size: [300, 300], mode: inset }
 
         small:
+            quality: 80
+            filters:
+                thumbnail: { size: [170, 170], mode: inset }
+
+        tiny:
             quality: 75
             filters:
-                thumbnail: { size: [256, 128], mode: inset }
+                thumbnail: { size: [100, 100], mode: inset }
+
+        watermark:
+            filters:
+                watermark:
+                    image: ../vendor/iad-holding/filer-tech-bundle/Iad/Bundle/FilerTechBundle/Resources/Data/watermark.png
+                    size: 0.5
+                    position: bottomright

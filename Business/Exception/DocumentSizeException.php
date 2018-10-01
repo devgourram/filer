@@ -4,6 +4,7 @@ namespace Iad\Bundle\FilerTechBundle\Business\Exception;
 
 /**
  * Class DocumentNotFoundException
+ *
  * @package Iad\Bundle\FilerTechBundle\Business\Exception
  */
 class DocumentSizeException extends \Exception

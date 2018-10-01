@@ -4,6 +4,7 @@ namespace Iad\Bundle\FilerTechBundle\Business;
 
 /**
  * Class Encoder
+ *
  * @package Iad\Bundle\FilerTechBundle\Business
  */
 class Encoder implements EncoderInterface

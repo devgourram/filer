@@ -2,10 +2,12 @@
 
 namespace Iad\Bundle\FilerTechBundle\Tests\Business;
 
-use Iad\Bundle\FilerTechBundle\Business\AvatarFiler;
+use Doctrine\ORM\EntityManager;
 use Iad\Bundle\FilerTechBundle\Business\FilerFactory;
-use Iad\Bundle\FilerTechBundle\Manager\DocumentObjectManager;
+use Iad\Bundle\FilerTechBundle\Business\ImageManager;
 use Iad\Bundle\FilerTechBundle\Business\Encoder;
+use Iad\Bundle\FilerTechBundle\Business\Service\AvatarFiler;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
 
 /**
  * Class FilerFactoryTest
@@ -19,19 +21,28 @@ class FilerFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testAccessor()
     {
+        $entityManager = $this->getMockBuilder(EntityManager::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $encoder = $this->getMockBuilder(Encoder::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $documentObjectManager = $this->getMockBuilder(DocumentObjectManager::class)
+        $imageManager = $this->getMockBuilder(ImageManager::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $fileFactory = new FilerFactory($documentObjectManager, $encoder);
+        $router = $this->getMockBuilder(Router::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $fileFactory = new FilerFactory($encoder, $imageManager, $router);
         $avatarFiler = $fileFactory->createAvatarFiler();
 
         $this->assertInstanceOf(AvatarFiler::class, $avatarFiler);
-        $this->assertEquals($documentObjectManager, $avatarFiler->getDocumentObjectManager());
+        $this->assertEquals($imageManager, $avatarFiler->getImageManager());
         $this->assertEquals($encoder, $avatarFiler->getEncoder());
+
     }
 }

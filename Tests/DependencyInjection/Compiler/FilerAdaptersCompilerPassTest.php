@@ -65,7 +65,7 @@ class FilerAdaptersCompilerPassTest extends \PHPUnit_Framework_TestCase
         ;
 
         $containerBuilder
-            ->expects($this->exactly(2))
+            ->expects($this->exactly(3))
             ->method('getDefinition')
             ->with('iad_filer.avatar_filer')
             ->willReturn($definition);
