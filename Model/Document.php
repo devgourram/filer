@@ -6,7 +6,7 @@
  * Time: 08:51
  */
 
-namespace Iad\Bundle\FilerTechBundle\Entity;
+namespace Iad\Bundle\FilerTechBundle\Model;
 
 use Iad\Bundle\FilerTechBundle\Business\Encoder;
 use Iad\Bundle\FilerTechBundle\Entity\Traits\FilerTrait;

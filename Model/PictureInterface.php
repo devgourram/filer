@@ -6,7 +6,7 @@
  * Time: 11:45
  */
 
-namespace Iad\Bundle\FilerTechBundle\Entity;
+namespace Iad\Bundle\FilerTechBundle\Model;
 
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;

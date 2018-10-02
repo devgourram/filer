@@ -21,27 +21,5 @@
             <argument type="service" id="router" />
         </service>
 
-        <service id="iad_filer.picture_filer" class="Iad\Bundle\FilerTechBundle\Business\Service\PictureFiler">
-            <tag name="iad_filer.business.service" />
-            <argument type="service" id="iad_filer.manager.picture" />
-            <argument type="service" id="iad_filer.image.manager" />
-            <argument type="service" id="iad_filer.encoder" />
-        </service>
-
-        <service id="iad_filer.document_filer" class="Iad\Bundle\FilerTechBundle\Business\Service\DocumentFiler">
-            <tag name="iad_filer.business.service" />
-            <argument type="service" id="iad_filer.encoder" />
-        </service>
-
-        <service id="iad_filer.picture.form.type" class="Iad\Bundle\FilerTechBundle\Form\PictureType">
-            <tag name="form.type" alias="iad_filer_picture" />
-            <argument>%picture_filer.class_mapping%</argument>
-        </service>
-
-        <service id="iad_filer.document.form.type" class="Iad\Bundle\FilerTechBundle\Form\DocumentType">
-            <tag name="form.type" alias="iad_filer_picture" />
-            <argument>%document_filer.class_mapping%</argument>
-        </service>
-
     </services>
 </container>

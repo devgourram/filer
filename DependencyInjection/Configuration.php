@@ -2,6 +2,8 @@
 
 namespace Iad\Bundle\FilerTechBundle\DependencyInjection;
 
+use Iad\Bundle\FilerTechBundle\Entity\Document;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -22,50 +24,6 @@ class Configuration implements ConfigurationInterface
 
         $root
             ->children()
-                // NEW CODE ADDED BY TEAM WEB
-                ->arrayNode('picture_filer')
-                    ->info('Picture filer configuration')
-                    ->children()
-                        ->scalarNode('channel')->end()
-                        ->arrayNode('resizing_filters')
-                            ->prototype('scalar')->end()
-                        ->end()
-                        ->scalarNode('watermark_filter')->end()
-                        ->scalarNode('public_base_url')->end()
-                        ->scalarNode('class_file')
-                            ->isRequired()
-                        ->end()
-                        ->scalarNode('class')
-                            ->isRequired()
-                        ->end()
-                        ->scalarNode('document_type')
-                            ->defaultValue('picture')
-                            ->isRequired()
-                        ->end()
-                        ->scalarNode('directory_prefix')
-                            ->defaultValue('picture/')
-                            ->isRequired()
-                        ->end()
-                    ->end()
-                ->end()
-                ->arrayNode('document_filer')
-                ->info('Document filer configuration')
-                ->children()
-                    ->scalarNode('channel')->end()
-                    ->scalarNode('document_type')
-                        ->defaultValue('document')
-                        ->isRequired()
-                    ->end()
-                    ->scalarNode('directory_prefix')
-                        ->defaultValue('document/')
-                        ->isRequired()
-                    ->end()
-                    ->scalarNode('class')
-                        ->isRequired()
-                    ->end()
-                ->end()
-                ->end()
-                // NEW CODE ADDED BY TEAM WEB
                 ->arrayNode('channels')
                     ->info('List all channels available')
                     ->children()
@@ -94,6 +52,56 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end();
 
+        $this->addPictureFiler($root);
+        $this->addDocumentFiler($root);
+
         return $treeBuilder;
+    }
+
+
+    private function addPictureFiler(ArrayNodeDefinition $rootNode)
+    {
+        $rootNode
+            ->children()
+            ->arrayNode('picture_filer')
+            ->info('Picture filer configuration')
+            ->children()
+                ->scalarNode('channel')->end()
+                ->arrayNode('resizing_filters')
+                    ->prototype('scalar')
+                ->end()
+            ->end()
+            ->scalarNode('watermark_filter')->end()
+            ->scalarNode('public_base_url')->end()
+            ->scalarNode('class_file')->end()
+            ->scalarNode('class')->end()
+            ->scalarNode('document_type')
+                ->defaultValue('picture')
+            ->end()
+            ->scalarNode('directory_prefix')
+                ->defaultValue('picture/')
+                ->end()
+            ->end()
+        ->end();
+
+    }
+
+    private function addDocumentFiler(ArrayNodeDefinition $rootNode)
+    {
+        $rootNode
+            ->children()
+            ->arrayNode('document_filer')
+            ->info('Document filer configuration')
+            ->children()
+             ->scalarNode('channel')->end()
+            ->scalarNode('document_type')
+                ->defaultValue('document')
+            ->end()
+            ->scalarNode('directory_prefix')
+                ->defaultValue('document/')
+            ->end()
+            ->scalarNode('class')->end()
+            ->end()
+        ->end();
     }
 }

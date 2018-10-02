@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <!-- Filer service -->
+    <services>
+
+        <service id="iad_filer.picture_filer" class="Iad\Bundle\FilerTechBundle\Business\Service\PictureFiler">
+            <tag name="iad_filer.business.service" />
+            <argument type="service" id="iad_filer.manager.picture" />
+            <argument type="service" id="iad_filer.image.manager" />
+            <argument type="service" id="iad_filer.encoder" />
+        </service>
+
+        <service id="iad_filer.picture.form.type" class="Iad\Bundle\FilerTechBundle\Form\PictureType">
+            <tag name="form.type" alias="iad_filer_picture" />
+            <argument>%picture_filer.class_mapping%</argument>
+        </service>
+
+    </services>
+
+</container>

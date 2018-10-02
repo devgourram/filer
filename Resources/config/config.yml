@@ -8,18 +8,11 @@ iad_filer_tech:
             private_path: "%filer_channel_local_private_path%"
     picture_filer:
         channel: local
-        class_file: "%picture_filer.class_file_mapping%"
-        class: "%picture_filer.class_mapping%"
         public_base_url: "%picture_filer.base_url%"
-        document_type: "%picture_filer.document_type%"
-        directory_prefix: "%picture_filer.directory_prefix%"
         resizing_filters: ['high', 'medium', 'small']
 
     document_filer:
         channel: local
-        class: "%document_filer.class_mapping%"
-        document_type: "%document_filer.document_type%"
-        directory_prefix: "%document_filer.directory_prefix%"
 
 liip_imagine:
     driver: imagick

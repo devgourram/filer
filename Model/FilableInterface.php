@@ -6,7 +6,7 @@
  * Time: 12:26
  */
 
-namespace Iad\Bundle\FilerTechBundle\Entity;
+namespace Iad\Bundle\FilerTechBundle\Model;
 
 
 interface FilableInterface

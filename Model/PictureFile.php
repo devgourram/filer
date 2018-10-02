@@ -6,7 +6,7 @@
  * Time: 10:44
  */
 
-namespace Iad\Bundle\FilerTechBundle\Entity;
+namespace Iad\Bundle\FilerTechBundle\Model;
 
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Iad\Bundle\FilerTechBundle\Entity\Traits\FilerTrait;
