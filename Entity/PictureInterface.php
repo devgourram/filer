@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  *
  * @package Iad\Bundle\FilerTechBundle\Entity
  */
-interface PictureInterface
+interface PictureInterface extends DocumentInterface
 {
     /**
      * @return int
@@ -50,14 +50,4 @@ interface PictureInterface
      * @return Picture
      */
     public function setRank($rank);
-    /**
-     * @return UploadedFile
-     */
-    public function getOriginalFile();
-
-    /**
-     * @param UploadedFile $originalFile
-     * @return Picture
-     */
-    public function setOriginalFile($originalFile);
 }

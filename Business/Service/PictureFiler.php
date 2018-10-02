@@ -24,12 +24,12 @@ class PictureFiler extends AbstractImageFiler
     /**
      * @var string
      */
-    protected $directoryPrefix = 'real_estate_pictures/';
+    protected $directoryPrefix;
 
     /**
      * @var string
      */
-    protected $documentType = 'real_estate_picture';
+    protected $documentType;
 
     /**
      * @var PictureManagerInterface
@@ -84,6 +84,41 @@ class PictureFiler extends AbstractImageFiler
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getDirectoryPrefix()
+    {
+        return $this->directoryPrefix;
+    }
+
+    /**
+     * @param string $directoryPrefix
+     * @return PictureFiler
+     */
+    public function setDirectoryPrefix($directoryPrefix)
+    {
+        $this->directoryPrefix = $directoryPrefix;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDocumentType()
+    {
+        return $this->documentType;
+    }
+
+    /**
+     * @param string $documentType
+     * @return PictureFiler
+     */
+    public function setDocumentType($documentType)
+    {
+        $this->documentType = $documentType;
+        return $this;
+    }
 
     /**
      * @return PictureManagerInterface

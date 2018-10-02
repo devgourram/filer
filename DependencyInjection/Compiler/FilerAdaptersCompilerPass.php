@@ -55,8 +55,16 @@ class FilerAdaptersCompilerPass implements CompilerPassInterface
                 $container->getDefinition($id)->addMethodCall('setPublicBaseUrl', [$config[$businessFilerName]['public_base_url']]);
             }
 
-            if (isset($config[$businessFilerName]['filer_class'])) {
-                $container->getDefinition($id)->addMethodCall('setClass', [$config[$businessFilerName]['filer_class']]);
+            if (isset($config[$businessFilerName]['class_file'])) {
+                $container->getDefinition($id)->addMethodCall('setClass', [$config[$businessFilerName]['class_file']]);
+            }
+
+            if (isset($config[$businessFilerName]['document_type'])) {
+                $container->getDefinition($id)->addMethodCall('setDocumentType', [$config[$businessFilerName]['document_type']]);
+            }
+
+            if (isset($config[$businessFilerName]['directory_prefix'])) {
+                $container->getDefinition($id)->addMethodCall('setDirectoryPrefix', [$config[$businessFilerName]['directory_prefix']]);
             }
         }
     }
