@@ -4,13 +4,14 @@ Configuration
 Installation
 ------------
 
-Installation 5 step process:
+Installation 6 step process:
 
 1. Download IadFilerTechBundle using composer
-2. Enable the Bundle
-3. Create your Picture class or Document
-4. Configure the IadFilerTechBundle
-5. Update your database schema
+2. Enable translation
+3. Enable the Bundle
+4. Create your Picture class or Document
+5. Configure the IadFilerTechBundle
+6. Update your database schema
 
 Step 1: Download IadFilerTechBundle using composer
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -20,7 +21,20 @@ Require the bundle with composer.
 
     $ composer require iad-holding/filer-tech-bundle "master"
 
-Step 2: Enable the bundle
+
+Step 2: Enable translation
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+enable translation support
+
+.. code-block:: yaml
+
+    # app/config/config.yml
+
+    framework:
+        translator: ~
+
+Step 3: Enable the bundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -46,7 +60,7 @@ Enable the bundle in the kernel.
             );
         }
 
-Step 3: Create your Picture class or Document
+Step 4: Create your Picture class or Document
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Create Picture class that extend from the base class.
@@ -141,7 +155,7 @@ Use the current Object in your entities relations as needed
 
         }
 
-Step 4: Configure the IadFilerTechBundle
+Step 5: Configure the IadFilerTechBundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PictureFiler
@@ -162,6 +176,23 @@ Base configuration, note that the bundle expose 4 defaults resizing_filters ['sm
                 directory_prefix: 'iad_pictures/'
                 document_type: 'pic'
 
+
+Append the default configuration of the bundle
+
+    .. code-block:: yaml
+
+        #app/config/config.yml
+        import:
+            - { resource: "@IadFilerTechBundle/Resources/config/config.yml" }
+
+
+Create parameters for  public & private path : storage
+
+    .. code-block:: yaml
+        parameters:
+            filer_channel_local_public_path: path/public
+            filer_channel_local_private_path: path/private
+            picture_filer.base_url: public/url
 
 If you wish create your own filters, create filter under liip_imagine key inside before using it.
 
@@ -192,7 +223,7 @@ DocumentFiler
                 document_type: 'doc'
 
 
-Step 5: Update your database schema
+Step 6: Update your database schema
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
