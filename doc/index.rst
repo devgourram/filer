@@ -27,33 +27,35 @@ Step 2: Enable the bundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-Enable the bundle in the kernel::
+Enable the bundle in the kernel.
 
-    <?php
-    // app/AppKernel.php
+.. configuration-block::
 
-    public function registerBundles()
-    {
-        $bundles = array(
-            // ...
-            new Liip\ImagineBundle\LiipImagineBundle(),
-            new Iad\Bundle\CoreBundle\IadCoreBundle(),
+    .. code-block:: php-annotations
 
-            // For the API
-            // new FOS\RestBundle\FOSRestBundle(),
 
-            // For the API Doc
-            // new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
+        public function registerBundles()
+        {
+            $bundles = array(
+                // ...
+                new Liip\ImagineBundle\LiipImagineBundle(),
+                new Iad\Bundle\CoreBundle\IadCoreBundle(),
 
-            new Iad\Bundle\FilerTechBundle\IadFilerTechBundle(),
-            // ...
-        );
-    }
+                // For the API
+                // new FOS\RestBundle\FOSRestBundle(),
+
+                // For the API Doc
+                // new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
+
+                new Iad\Bundle\FilerTechBundle\IadFilerTechBundle(),
+                // ...
+            );
+        }
 
 Step 3: Create your Picture class
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Create Picture & PictureFile class
+Create Picture class that extend from the base class.
 
 .. configuration-block::
 
@@ -81,6 +83,8 @@ Create Picture & PictureFile class
             protected $id;
 
         }
+
+Create PictureFile class that extend from the base class
 
     .. code-block:: php-annotations
 
@@ -117,6 +121,9 @@ Create Picture & PictureFile class
 
 Step 4: Configure the IadFilerTechBundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Base configuration, note that the bundle expose 4 defaults resizing_filters ['small', 'medium', 'high', 'tiny'].
+
 .. configuration-block::
 
     .. code-block:: yaml
@@ -131,3 +138,18 @@ Step 4: Configure the IadFilerTechBundle
                 class: AppBundle\Entity\Picture
                 directory_prefix: 'pictures/'
                 document_type: 'picture'
+
+
+If you wish create your own filters, create filter under liip_imagine key inside before using it.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        liip_imagine:
+        filter_sets:
+            filterName:
+                quality: 90
+                filters:
+                    thumbnail: { size: [800, 600], mode: inset }
