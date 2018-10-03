@@ -2,9 +2,11 @@
 
 namespace Iad\Bundle\FilerTechBundle\DependencyInjection;
 
+use Iad\Bundle\FilerTechBundle\Form\PictureType;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
@@ -25,12 +27,6 @@ class IadFilerTechExtension extends Extension implements PrependExtensionInterfa
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
 
-        if (!empty($configs[0]['document_filer'])) {
-            $loader->load('document.xml');
-        }
-        if (!empty($configs[0]['picture_filer'])) {
-            $loader->load('picture.xml');
-        }
     }
 
     /**
@@ -40,6 +36,8 @@ class IadFilerTechExtension extends Extension implements PrependExtensionInterfa
      */
     public function prepend(ContainerBuilder $container)
     {
+        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+
         $configFiler = $this->processConfiguration(new Configuration(), $container->getExtensionConfig($this->getAlias()));
         $configGaufrette = $this->processConfiguration(new Configuration(), $container->getExtensionConfig('knp_gaufrette'));
 
@@ -80,8 +78,40 @@ class IadFilerTechExtension extends Extension implements PrependExtensionInterfa
             }
         }
 
+
         $container->prependExtensionConfig('knp_gaufrette', $configGaufrette);
 
+        if(!empty($configFiler['picture_filer'])) {
+            $this->loadPicture($loader, $configFiler['picture_filer'], $container);
+        }
+
+        if(!empty($configFiler['document_filer'])){
+            $this->loadDocument($loader, $configFiler['document_filer'], $container);
+        }
+
+    }
+
+    /**
+     * Load services for picture management
+     *
+     * @param Loader $loader
+     * @param array $configs
+     */
+    private function loadPicture(Loader\FileLoader $loader, array $configs, ContainerBuilder $container)
+    {
+        $loader->load('picture.xml');
+        $definition = new Definition(PictureType::class);
+    }
+
+    /**
+     * Load services for document management
+     *
+     * @param Loader $loader
+     * @param array $configs
+     */
+    private function loadDocument(Loader\FileLoader $loader, array $configs, ContainerBuilder $container)
+    {
+        $loader->load('document.xml');
     }
 
 }

@@ -67,6 +67,7 @@ class FilerAdaptersCompilerPass implements CompilerPassInterface
                 $container->getDefinition($id)->addMethodCall('setDirectoryPrefix', [$config[$businessFilerName]['directory_prefix']]);
             }
         }
+
     }
 
     /**

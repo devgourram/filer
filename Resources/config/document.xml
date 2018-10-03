@@ -12,9 +12,8 @@
             <argument type="service" id="iad_filer.encoder" />
         </service>
 
-        <service id="iad_filer.document.form.type" class="Iad\Bundle\FilerTechBundle\Form\DocumentType">
-            <tag name="form.type" alias="iad_filer_document" />
-            <argument>%document_filer.class_mapping%</argument>
+        <service id="iad_filer.form.document_filer" class="Iad\Bundle\FilerTechBundle\Form\DocumentType">
+            <tag name="form.type" alias="iad_filer_form" />
         </service>
 
     </services>

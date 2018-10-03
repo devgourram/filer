@@ -8,7 +8,7 @@
 
 namespace Iad\Bundle\FilerTechBundle\Manager;
 
-interface PictureManagerInterface
+interface DocumentManagerInterface
 {
     /**
      * {@inheritDoc}

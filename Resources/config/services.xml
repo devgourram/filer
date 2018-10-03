@@ -8,6 +8,7 @@
     <services>
         <service id="iad_filer.manager.document_object" class="Iad\Bundle\FilerTechBundle\Manager\DocumentObjectManager" parent="iad_core.manager.paginate.abstract" />
         <service id="iad_filer.manager.picture" class="Iad\Bundle\FilerTechBundle\Manager\PictureManager" parent="iad_core.manager.paginate.abstract"/>
+        <service id="iad_filer.manager.document" class="Iad\Bundle\FilerTechBundle\Manager\DocumentManager" parent="iad_core.manager.paginate.abstract"/>
 
         <service id="iad_filer.encoder" class="Iad\Bundle\FilerTechBundle\Business\Encoder" />
 

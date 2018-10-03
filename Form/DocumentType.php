@@ -29,11 +29,6 @@ class DocumentType extends AbstractType
     private $class;
 
 
-    public function __construct($class)
-    {
-        $this->class = $class;
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -69,5 +64,15 @@ class DocumentType extends AbstractType
         return 'iadfilertech_document';
     }
 
+    /**
+     * @param string $class
+     */
+    public function setClass($class)
+    {
+        $this->class = $class;
+    }
+
+
+    
 
 }

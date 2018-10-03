@@ -12,9 +12,9 @@ namespace Iad\Bundle\FilerTechBundle\Business\Service;
 use Iad\Bundle\FilerTechBundle\Business\Encoder;
 use Iad\Bundle\FilerTechBundle\Business\Exception\DocumentMimeTypeException;
 use Iad\Bundle\FilerTechBundle\Business\FileResource\ImageFile;
-use Iad\Bundle\FilerTechBundle\Entity\Picture;
-use Iad\Bundle\FilerTechBundle\Entity\PictureFile;
-use Iad\Bundle\FilerTechBundle\Manager\PictureManagerInterface;
+use Iad\Bundle\FilerTechBundle\Model\Picture;
+use Iad\Bundle\FilerTechBundle\Model\PictureFile;
+use Iad\Bundle\FilerTechBundle\Manager\DocumentManagerInterface;
 use Iad\Bundle\FilerTechBundle\Business\AbstractImageFiler;
 use Iad\Bundle\FilerTechBundle\Business\ImageManager;
 use Symfony\Component\HttpFoundation\File\File;
@@ -59,7 +59,7 @@ class PictureFiler extends AbstractImageFiler
     protected  $class;
     
     
-    public function __construct(PictureManagerInterface $pictureManager, ImageManager $imageManager, Encoder $encoder)
+    public function __construct(DocumentManagerInterface $pictureManager, ImageManager $imageManager, Encoder $encoder)
     {
         $this->pictureManager = $pictureManager;
         $this->imageManager = $imageManager;
@@ -121,7 +121,7 @@ class PictureFiler extends AbstractImageFiler
     }
 
     /**
-     * @return PictureManagerInterface
+     * @return DocumentManagerInterface
      */
     public function getPictureManager()
     {
@@ -129,11 +129,11 @@ class PictureFiler extends AbstractImageFiler
     }
 
     /**
-     * @param PictureManagerInterface $pictureManager
+     * @param DocumentManagerInterface $pictureManager
      *
      * @return PictureFiler
      */
-    public function setPictureManager(PictureManagerInterface $pictureManager)
+    public function setPictureManager(DocumentManagerInterface $pictureManager)
     {
         $this->pictureManager = $pictureManager;
         $this->entityManager = $pictureManager->getManager();
@@ -243,4 +243,24 @@ class PictureFiler extends AbstractImageFiler
 
         return $pictureFile;
     }
+
+    /**
+     * @return ImageManager
+     */
+    public function getImageManager()
+    {
+        return $this->imageManager;
+    }
+
+    /**
+     * @param ImageManager $imageManager
+     * @return PictureFiler
+     */
+    public function setImageManager($imageManager)
+    {
+        $this->imageManager = $imageManager;
+        return $this;
+    }
+
+
 }

@@ -11,7 +11,7 @@ namespace Iad\Bundle\FilerTechBundle\Manager;
 
 use Iad\Bundle\CoreBundle\Manager\AbstractPaginateManager;
 
-class PictureManager extends AbstractPaginateManager implements DocumentManagerInterface
+class DocumentManager extends AbstractPaginateManager implements DocumentManagerInterface
 {
 
     /**
@@ -19,15 +19,15 @@ class PictureManager extends AbstractPaginateManager implements DocumentManagerI
      */
     public function getClass()
     {
-        return 'Iad\Bundle\FilerTechBundle\Entity\Picture';
+        return 'Iad\Bundle\FilerTechBundle\Entity\Document';
     }
 
     /**
-     * @return \Iad\Bundle\FilerTechBundle\Repository\PictureRepository
+     * @return \Iad\Bundle\FilerTechBundle\Repository\DocumentRepository
      */
     public function getRepository()
     {
-        return $this->entityManager->getRepository('IadFilerTechBundle:Picture');
+        return $this->entityManager->getRepository('IadFilerTechBundle:Document');
     }
 
 }

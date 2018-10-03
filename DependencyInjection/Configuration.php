@@ -63,8 +63,8 @@ class Configuration implements ConfigurationInterface
     {
         $rootNode
             ->children()
-            ->arrayNode('picture_filer')
-            ->info('Picture filer configuration')
+                ->arrayNode('picture_filer')->canBeUnset()
+                 ->info('Picture filer configuration')
             ->children()
                 ->scalarNode('channel')->end()
                 ->arrayNode('resizing_filters')
@@ -73,8 +73,8 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->scalarNode('watermark_filter')->end()
             ->scalarNode('public_base_url')->end()
-            ->scalarNode('class_file')->end()
-            ->scalarNode('class')->end()
+            ->scalarNode('class_file')->isRequired()->cannotBeEmpty()->end()
+            ->scalarNode('class')->isRequired()->cannotBeEmpty()->end()
             ->scalarNode('document_type')
                 ->defaultValue('picture')
             ->end()
@@ -90,7 +90,7 @@ class Configuration implements ConfigurationInterface
     {
         $rootNode
             ->children()
-            ->arrayNode('document_filer')
+            ->arrayNode('document_filer')->canBeUnset()
             ->info('Document filer configuration')
             ->children()
              ->scalarNode('channel')->end()
@@ -100,7 +100,8 @@ class Configuration implements ConfigurationInterface
             ->scalarNode('directory_prefix')
                 ->defaultValue('document/')
             ->end()
-            ->scalarNode('class')->end()
+            ->scalarNode('class')->isRequired()->cannotBeEmpty()
+            ->end()
             ->end()
         ->end();
     }

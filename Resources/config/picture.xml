@@ -14,9 +14,8 @@
             <argument type="service" id="iad_filer.encoder" />
         </service>
 
-        <service id="iad_filer.picture.form.type" class="Iad\Bundle\FilerTechBundle\Form\PictureType">
-            <tag name="form.type" alias="iad_filer_picture" />
-            <argument>%picture_filer.class_mapping%</argument>
+        <service id="iad_filer.form.picture_filer" class="Iad\Bundle\FilerTechBundle\Form\PictureType">
+            <tag name="form.type" alias="iad_filer_form" />
         </service>
 
     </services>

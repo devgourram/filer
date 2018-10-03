@@ -1,7 +1,9 @@
 <?php
 namespace Iad\Bundle\FilerTechBundle\Tests\DependencyInjection\Compiler;
 
+use AppBundle\Entity\Picture;
 use Iad\Bundle\FilerTechBundle\DependencyInjection\Compiler\FilerAdaptersCompilerPass;
+use Iad\Bundle\FilerTechBundle\Model\PictureFile;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
@@ -22,7 +24,7 @@ class FilerAdaptersCompilerPassTest extends \PHPUnit_Framework_TestCase
         $containerBuilder = $this->getContainerBuilderMock();
         $containerBuilder
             ->method('findTaggedServiceIds')
-            ->willReturn(['iad_filer.avatar_filer' => []]);
+            ->willReturn(['iad_filer.picture_filer' => []]);
 
         $containerBuilder
             ->method('getExtensionConfig')
@@ -37,8 +39,10 @@ class FilerAdaptersCompilerPassTest extends \PHPUnit_Framework_TestCase
                             'private_path'   => '/tmp/public',
                         ],
                     ],
-                    'avatar_filer' => [
+                    'picture_filer' => [
                         'channel' => 'local',
+                        'class' => 'anything',
+                        'class_file' => 'anything'
                     ],
                 ],
             ]);
@@ -67,7 +71,7 @@ class FilerAdaptersCompilerPassTest extends \PHPUnit_Framework_TestCase
         $containerBuilder
             ->expects($this->exactly(3))
             ->method('getDefinition')
-            ->with('iad_filer.avatar_filer')
+            ->with('iad_filer.picture_filer')
             ->willReturn($definition);
 
         $iadFilerTechExtension->process($containerBuilder);

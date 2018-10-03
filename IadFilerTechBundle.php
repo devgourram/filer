@@ -3,6 +3,7 @@
 namespace Iad\Bundle\FilerTechBundle;
 
 use Iad\Bundle\FilerTechBundle\DependencyInjection\Compiler\FilerAdaptersCompilerPass;
+use Iad\Bundle\FilerTechBundle\DependencyInjection\Compiler\FilerFormCompilerPass;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -20,5 +21,6 @@ class IadFilerTechBundle extends Bundle
     {
         parent::build($container);
         $container->addCompilerPass(new FilerAdaptersCompilerPass());
+        $container->addCompilerPass(new FilerFormCompilerPass());
     }
 }

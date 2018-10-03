@@ -5,23 +5,25 @@ namespace Iad\Bundle\FilerTechBundle\Tests\Business\Service;
 use Gaufrette\Filesystem;
 use Iad\Bundle\FilerTechBundle\Business\Service\AdministrativeDocumentFiler;
 use Iad\Bundle\FilerTechBundle\Business\Encoder;
+use Iad\Bundle\FilerTechBundle\Business\Service\DocumentFiler;
 use Iad\Bundle\FilerTechBundle\Entity\AdministrativeDocument;
+use Iad\Bundle\FilerTechBundle\Model\Document;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use phpmock\MockBuilder;
 
 /**
- * Class AdministrativeDocumentFilerTest
+ * Class DocumentFilerTest
  *
  * @package Iad\Bundle\FilerTechBundle\Tests\Business
  */
-class AdministrativeDocumentFilerTest extends \PHPUnit_Framework_TestCase
+class DocumentFilerTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * testAccessor
      */
     public function testAccessor()
     {
-        $this->assertTrue(class_exists('Iad\Bundle\FilerTechBundle\Business\Service\AdministrativeDocumentFiler'));
+        $this->assertTrue(class_exists('Iad\Bundle\FilerTechBundle\Business\Service\DocumentFiler'));
     }
 
     /**
@@ -29,10 +31,14 @@ class AdministrativeDocumentFilerTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateSuccess()
     {
-        $admDocFiler = $this->getAdmDocFiler($this->getMockFilesystem());
-        $idPeople = 42;
+        $documentFiler = $this->getDocumentFiler($this->getMockFilesystem());
+        $idPeople = -1;
         $file = $this->getMockUploadedFile();
-        $document = new AdministrativeDocument();
+
+        /**
+         * Document $document
+         */
+        $document = new class extends Document{};
         $document->setOriginalFile($file);
 
         $builder = new MockBuilder();
@@ -47,20 +53,20 @@ class AdministrativeDocumentFilerTest extends \PHPUnit_Framework_TestCase
         $mock = $builder->build();
         $mock->enable();
 
-        $sObject = $admDocFiler->create($document, $idPeople);
+        $sObject = $documentFiler->create($document, $idPeople);
 
-        $this->assertInstanceOf(AdministrativeDocument::class, $sObject);
+        $this->assertInstanceOf(Document::class, $sObject);
     }
 
     /**
      * @param Filesystem $filesystem
      *
-     * @return AdministrativeDocumentFiler
+     * @return DocumentFiler
      */
-    private function getAdmDocFiler(Filesystem $filesystem)
+    private function getDocumentFiler(Filesystem $filesystem)
     {
         $encoder = new Encoder();
-        $filer = new AdministrativeDocumentFiler($encoder);
+        $filer = new DocumentFiler($encoder);
         $filer->setPublicFilesystem($filesystem);
         $filer->setPrivateFilesystem($filesystem);
 
