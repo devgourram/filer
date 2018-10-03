@@ -186,9 +186,10 @@ Append the default configuration of the bundle
             - { resource: "@IadFilerTechBundle/Resources/config/config.yml" }
 
 
-Create parameters for  public & private path : storage
+Create parameters for  public & private path.
 
     .. code-block:: yaml
+
         parameters:
             filer_channel_local_public_path: path/public
             filer_channel_local_private_path: path/private
