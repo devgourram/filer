@@ -169,11 +169,11 @@ If you wish create your own filters, create filter under liip_imagine key inside
 
         # app/config/config.yml
         liip_imagine:
-        filter_sets:
-            filterName:
-                quality: 90
-                filters:
-                    thumbnail: { size: [800, 600], mode: inset }
+            filter_sets:
+                filterName:
+                    quality: 90
+                    filters:
+                        thumbnail: { size: [800, 600], mode: inset }
 
 
 
