@@ -8,7 +8,7 @@ Installation 5 step process:
 
 1. Download IadFilerTechBundle using composer
 2. Enable the Bundle
-3. Create your Picture class
+3. Create your Picture class or Document
 4. Configure the IadFilerTechBundle
 5. Update your database schema
 
@@ -46,7 +46,7 @@ Enable the bundle in the kernel.
             );
         }
 
-Step 3: Create your Picture class
+Step 3: Create your Picture class or Document
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Create Picture class that extend from the base class.
@@ -110,9 +110,42 @@ Create PictureFile class that extend from the base class
 
         }
 
+OR
+
+For using Document instead of Picture create Document class that extends from the Base document.
+Use the current Object in your entities relations as needed
+
+
+    .. code-block:: php-annotations
+
+        <?php
+        // src/AppBundle/Entity/Document.php
+
+        namespace AppBundle\Entity;
+
+        use Iad\Bundle\FilerTechBundle\Model\Document as BaseDocument;
+        use Doctrine\ORM\Mapping as ORM;
+
+        /**
+         * @ORM\Entity
+         * @ORM\Table(name="app_document")
+         */
+        class Document extends BaseDocument
+        {
+            /**
+             * @ORM\Id
+             * @ORM\Column(type="integer")
+             * @ORM\GeneratedValue(strategy="AUTO")
+             */
+            protected $id;
+
+        }
 
 Step 4: Configure the IadFilerTechBundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+PictureFiler
+~~~~~~~~~~~
 
 Base configuration, note that the bundle expose 4 defaults resizing_filters ['small', 'medium', 'high', 'tiny'].
 
@@ -126,8 +159,8 @@ Base configuration, note that the bundle expose 4 defaults resizing_filters ['sm
                 resizing_filters: ['small', 'tiny']
                 class_file: AppBundle\Entity\PictureFile
                 class: AppBundle\Entity\Picture
-                directory_prefix: 'pictures/'
-                document_type: 'picture'
+                directory_prefix: 'iad_pictures/'
+                document_type: 'pic'
 
 
 If you wish create your own filters, create filter under liip_imagine key inside before using it.
@@ -141,3 +174,58 @@ If you wish create your own filters, create filter under liip_imagine key inside
                 quality: 90
                 filters:
                     thumbnail: { size: [800, 600], mode: inset }
+
+
+
+
+DocumentFiler
+~~~~~~~~~~~~
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        iad_filer_tech:
+            document_filer:
+                channel: local
+                class: AppBundle\Entity\Document
+                directory_prefix: 'iad_documents/'
+                document_type: 'doc'
+
+~~~~~~~~~~~
+Step 5: Update your database schema
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. code-block:: bash
+
+    $ php bin/console doctrine:schema:update --force
+
+
+Usage
+------------
+
+The bundle offer 2 services:
+
+1. PictureFiler
+2. DocumentFiler
+
+
+1: PictureFiler
+~~~~~~~~~~~~~~~
+
+    .. code-block:: php-annotations
+
+        /** @var PictureFiler $filer */
+        $filer = $this->get('iad_filer.picture_filer');
+        $pictureFiltered = $filer->create($picture, "-1");
+
+
+2: DocumentFiler
+~~~~~~~~~~~~~~~
+
+    .. code-block:: php-annotations
+
+        /** @var DocumentFiler $filer */
+        $filer = $this->get('iad_filer.document_filer');
+        $doc = $filer->create($picture, "-1");
+
