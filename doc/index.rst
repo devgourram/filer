@@ -46,15 +46,11 @@ Enable the bundle in the kernel.
         {
             $bundles = array(
                 // ...
-                new Liip\ImagineBundle\LiipImagineBundle(),
-                new Iad\Bundle\CoreBundle\IadCoreBundle(),
+                new \Liip\ImagineBundle\LiipImagineBundle(),
+                new \Knp\Bundle\GaufretteBundle\KnpGaufretteBundle(),
+                new \Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
 
-                // For the API
-                // new FOS\RestBundle\FOSRestBundle(),
-
-                // For the API Doc
-                // new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
-
+                new \Iad\Bundle\CoreBundle\IadCoreBundle(),
                 new Iad\Bundle\FilerTechBundle\IadFilerTechBundle(),
                 // ...
             );
