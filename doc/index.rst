@@ -1,13 +1,10 @@
 Configuration
 =============
 
-[summary](/README.md)
-
-
 Installation
 ------------
 
-Installation is a quick (I promise!) 7 step process:
+Installation 5 step process:
 
 1. Download IadFilerTechBundle using composer
 2. Enable the Bundle
@@ -17,7 +14,7 @@ Installation is a quick (I promise!) 7 step process:
 
 Step 1: Download IadFilerTechBundle using composer
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Require the bundle with composer:
+Require the bundle with composer.
 
 .. code-block:: bash
 
@@ -29,10 +26,7 @@ Step 2: Enable the bundle
 
 Enable the bundle in the kernel.
 
-.. configuration-block::
-
     .. code-block:: php-annotations
-
 
         public function registerBundles()
         {
@@ -56,8 +50,6 @@ Step 3: Create your Picture class
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Create Picture class that extend from the base class.
-
-.. configuration-block::
 
     .. code-block:: php-annotations
 
@@ -124,8 +116,6 @@ Step 4: Configure the IadFilerTechBundle
 
 Base configuration, note that the bundle expose 4 defaults resizing_filters ['small', 'medium', 'high', 'tiny'].
 
-.. configuration-block::
-
     .. code-block:: yaml
 
         # app/config/config.yml
@@ -141,8 +131,6 @@ Base configuration, note that the bundle expose 4 defaults resizing_filters ['sm
 
 
 If you wish create your own filters, create filter under liip_imagine key inside before using it.
-
-.. configuration-block::
 
     .. code-block:: yaml
 
