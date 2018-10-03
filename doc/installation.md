@@ -34,7 +34,7 @@ public function registerBundles()
     return array(
         //  [...]
         new Liip\ImagineBundle\LiipImagineBundle(),
-        new Iad\Bundle\DbTechBundle\IadDbTechBundle(),
+        new Iad\Bundle\CoreBundle\IadCoreBundle(),
 
         // For the API
         // new FOS\RestBundle\FOSRestBundle(),

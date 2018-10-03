@@ -68,6 +68,31 @@ class FilerAdaptersCompilerPassTest extends \PHPUnit_Framework_TestCase
             ->with('setPrivateFilesystem', $this->anything())
         ;
 
+        $definition
+            ->expects($this->at(2))
+            ->method('addMethodCall')
+            ->with('setResizingFilters', $this->anything())
+        ;
+
+        $definition
+            ->expects($this->at(3))
+            ->method('addMethodCall')
+            ->with('setClass', $this->anything())
+        ;
+
+        $definition
+            ->expects($this->at(4))
+            ->method('addMethodCall')
+            ->with('setDocumentType', $this->anything())
+        ;
+
+        $definition
+            ->expects($this->at(5))
+            ->method('addMethodCall')
+            ->with('setDirectoryPrefix', $this->anything())
+        ;
+
+
         $containerBuilder
             ->expects($this->exactly(3))
             ->method('getDefinition')

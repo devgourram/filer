@@ -3,38 +3,28 @@ Configuration
 
 [summary](/README.md)
 
-## Default configuration
 
-To use the default configuration, import the `@IadFilerTechBundle/Resources/config/config.yml` :
+Installation
+------------
 
-```yml
-# app/config/config.yml
+Installation is a quick (I promise!) 7 step process:
 
-imports:
-    - { resource: @IadFilerTechBundle/Resources/config/config.yml }
-```
+1. Download IadFilerTechBundle using composer
+2. Enable the Bundle
+3. Create your Picture class
+4. Configure the IadFilerTechBundle
+5. Update your database schema
 
-And add the `root_path` configuration:
+Step 1: Download IadFilerTechBundle using composer
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Require the bundle with composer:
 
-```yml
-# app/config/config.yml
+.. code-block:: bash
 
-iad_filer_tech:
-    root_path: /Path/File/System
-```
+    $ composer require friendsofsymfony/user-bundle "~2.0"
+    
+Composer will install the bundle to your project's ``vendor/friendsofsymfony/user-bundle`` directory.
+If you encounter installation errors pointing at a lack of configuration parameters, such as ``The child node "db_driver" at path "fos_user" must be configured``, you should complete the configuration in Step 5 first and then re-run this step.
 
-## Make your own configuration
-
-You must configure [liip/LiipImagineBundle](http://symfony.com/doc/master/bundles/LiipImagineBundle/configuration.html)
-and at least one [filter](http://symfony.com/doc/master/bundles/LiipImagineBundle/filters.html).
-
-```yml
-# app/config/config.yml
-
-iad_filer_tech:
-    root_path: /Path/File/System
-    document_types: ARRAY OF SCALAR
-    mime_types: ARRAY OF SCALAR
-    image:
-        default_filter: IMAGINE_FILTER_NAME
-```
+Step 2: Enable the bundle
+~~~~~~~~~~~~~~~~~~~~~~~~~

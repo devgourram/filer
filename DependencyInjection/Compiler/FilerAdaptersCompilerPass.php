@@ -43,29 +43,33 @@ class FilerAdaptersCompilerPass implements CompilerPassInterface
                 $this->injectPrivateFileSystem($container, $businessChannel, $id);
             }
 
+
+            $definition = $container->getDefinition($id);
             if (isset($config[$businessFilerName]['resizing_filters'])) {
-                $container->getDefinition($id)->addMethodCall('setResizingFilters', [$config[$businessFilerName]['resizing_filters']]);
+                $definition->addMethodCall('setResizingFilters', [$config[$businessFilerName]['resizing_filters']]);
             }
 
             if (isset($config[$businessFilerName]['watermark_filter'])) {
-                $container->getDefinition($id)->addMethodCall('setWaterMarkFilter', [$config[$businessFilerName]['watermark_filter']]);
+                $definition->addMethodCall('setWaterMarkFilter', [$config[$businessFilerName]['watermark_filter']]);
             }
 
             if (isset($config[$businessFilerName]['public_base_url'])) {
-                $container->getDefinition($id)->addMethodCall('setPublicBaseUrl', [$config[$businessFilerName]['public_base_url']]);
+                $definition->addMethodCall('setPublicBaseUrl', [$config[$businessFilerName]['public_base_url']]);
             }
 
             if (isset($config[$businessFilerName]['class_file'])) {
-                $container->getDefinition($id)->addMethodCall('setClass', [$config[$businessFilerName]['class_file']]);
+                $definition->addMethodCall('setClass', [$config[$businessFilerName]['class_file']]);
             }
 
             if (isset($config[$businessFilerName]['document_type'])) {
-                $container->getDefinition($id)->addMethodCall('setDocumentType', [$config[$businessFilerName]['document_type']]);
+                $definition->addMethodCall('setDocumentType', [$config[$businessFilerName]['document_type']]);
             }
 
             if (isset($config[$businessFilerName]['directory_prefix'])) {
-                $container->getDefinition($id)->addMethodCall('setDirectoryPrefix', [$config[$businessFilerName]['directory_prefix']]);
+                $definition->addMethodCall('setDirectoryPrefix', [$config[$businessFilerName]['directory_prefix']]);
             }
+
+            $container->setDefinition($id, $definition);
         }
 
     }
