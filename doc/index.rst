@@ -191,7 +191,7 @@ DocumentFiler
                 directory_prefix: 'iad_documents/'
                 document_type: 'doc'
 
-~~~~~~~~~~~
+
 Step 5: Update your database schema
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
