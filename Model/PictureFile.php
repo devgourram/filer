@@ -26,6 +26,8 @@ abstract class PictureFile implements PictureFileInterface
 
     /**
      * @var PictureInterface
+     *
+     * @ORM\ManyToOne(targetEntity="Picture", inversedBy="files", cascade={"persist"})
      */
     protected $picture;
 

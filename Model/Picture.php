@@ -56,6 +56,7 @@ abstract class Picture implements PictureInterface, FilableInterface
 
     /**
      * @var PictureFileInterface|Collection
+     * @ORM\OneToMany(targetEntity="PictureFile", mappedBy="picture", cascade={"persist"})
      */
     protected $files;
 

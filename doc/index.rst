@@ -111,13 +111,6 @@ Create PictureFile class that extend from the base class
              */
             protected $id;
 
-            /**
-             * @var Picture $picture
-             * @ORM\ManyToOne(targetEntity="Picture", inversedBy="files")
-             * @ORM\JoinColumn(name="id_picture", referencedColumnName="id", nullable=false, onDelete="cascade")
-             */
-            protected $picture;
-
         }
 
 OR
