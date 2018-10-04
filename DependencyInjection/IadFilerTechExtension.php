@@ -2,7 +2,6 @@
 
 namespace Iad\Bundle\FilerTechBundle\DependencyInjection;
 
-use Iad\Bundle\FilerTechBundle\Form\PictureType;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
@@ -100,7 +99,6 @@ class IadFilerTechExtension extends Extension implements PrependExtensionInterfa
     private function loadPicture(Loader\FileLoader $loader, array $configs, ContainerBuilder $container)
     {
         $loader->load('picture.xml');
-        $definition = new Definition(PictureType::class);
     }
 
     /**
