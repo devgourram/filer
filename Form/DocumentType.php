@@ -37,7 +37,7 @@ class DocumentType extends AbstractType
         $builder
             ->add('originalFile', FileType::class, [
                 'required' => true,
-                'label' => 'form.transaction_document_file.label',
+                'label' => 'iad_filer.form.document_file.label',
                 'attr' => [
                     'accept' => implode(",", self::MIME_TYPES),
                     'data-max-size' => self::MAX_SIZE,
