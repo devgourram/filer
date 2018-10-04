@@ -38,11 +38,10 @@ class FilerFactoryTest extends \PHPUnit_Framework_TestCase
             ->getMock();
 
         $fileFactory = new FilerFactory($encoder, $imageManager, $router);
-        $avatarFiler = $fileFactory->createAvatarFiler();
 
-        $this->assertInstanceOf(AvatarFiler::class, $avatarFiler);
-        $this->assertEquals($imageManager, $avatarFiler->getImageManager());
-        $this->assertEquals($encoder, $avatarFiler->getEncoder());
+        $this->assertInstanceOf(FilerFactory::class, $fileFactory);
+        $this->assertEquals($imageManager, $fileFactory->getImageManager());
+        $this->assertEquals($encoder, $fileFactory->getEncoder());
 
     }
 }

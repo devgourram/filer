@@ -23,6 +23,8 @@ abstract class PictureFile implements PictureFileInterface
 {
     use FilerTrait;
     use ImageTrait;
+    use TimestampableEntity;
+
 
     /**
      * @var PictureInterface
@@ -34,6 +36,7 @@ abstract class PictureFile implements PictureFileInterface
     public function setPicture(PictureInterface $picture)
     {
         $this->picture = $picture;
+        return $this;
     }
 
     public function getPicture()

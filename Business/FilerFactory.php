@@ -4,11 +4,6 @@ namespace Iad\Bundle\FilerTechBundle\Business;
 
 use Doctrine\ORM\EntityManager;
 use Iad\Bundle\FilerTechBundle\Business\FileResource\FileBuilder;
-use Iad\Bundle\FilerTechBundle\Business\Service\AdministrativeDocumentFiler;
-use Iad\Bundle\FilerTechBundle\Business\Service\AvatarFiler;
-use Iad\Bundle\FilerTechBundle\Business\Service\EventPictureFiler;
-use Iad\Bundle\FilerTechBundle\Business\Service\TrainingPolePictureFiler;
-use Iad\Bundle\FilerTechBundle\Business\Service\RealEstatePictureFiler;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 
 /**
@@ -53,57 +48,76 @@ class FilerFactory
     }
 
     /**
-     * @return AvatarFiler
+     * @return EntityManager
      */
-    public function createAvatarFiler()
+    public function getEntityManager()
     {
-        $filer = new AvatarFiler($this->encoder);
-        $filer->setImageManager($this->imageManager);
-
-        return $filer;
+        return $this->entityManager;
     }
 
     /**
-     * @return RealEstatePictureFiler
+     * @param EntityManager $entityManager
+     * @return FilerFactory
      */
-    public function createRealEstatePictureFiler()
+    public function setEntityManager($entityManager)
     {
-        $filer = new RealEstatePictureFiler($this->encoder);
-        $filer->setImageManager($this->imageManager);
-
-        return $filer;
+        $this->entityManager = $entityManager;
+        return $this;
     }
 
     /**
-     * @return EventPictureFiler
+     * @return FileBuilder
      */
-    public function createEventPictureFiler()
+    public function getFileBuilder()
     {
-        $filer = new EventPictureFiler($this->encoder);
-        $filer->setImageManager($this->imageManager);
-
-        return $filer;
+        return $this->fileBuilder;
     }
 
     /**
-     * @return TrainingPolePictureFiler
+     * @param FileBuilder $fileBuilder
+     * @return FilerFactory
      */
-    public function createTrainingPolePictureFiler()
+    public function setFileBuilder($fileBuilder)
     {
-        $filer = new TrainingPolePictureFiler($this->encoder);
-        $filer->setImageManager($this->imageManager);
-
-        return $filer;
+        $this->fileBuilder = $fileBuilder;
+        return $this;
     }
 
     /**
-     * @return AdministrativeDocumentFiler
+     * @return Encoder
      */
-    public function createAdministrativeDocumentFiler()
+    public function getEncoder()
     {
-        $filer = new AdministrativeDocumentFiler($this->encoder);
-        $filer->setRouter($this->router);
-
-        return $filer;
+        return $this->encoder;
     }
+
+    /**
+     * @param Encoder $encoder
+     * @return FilerFactory
+     */
+    public function setEncoder($encoder)
+    {
+        $this->encoder = $encoder;
+        return $this;
+    }
+
+    /**
+     * @return ImageManager
+     */
+    public function getImageManager()
+    {
+        return $this->imageManager;
+    }
+
+    /**
+     * @param ImageManager $imageManager
+     * @return FilerFactory
+     */
+    public function setImageManager($imageManager)
+    {
+        $this->imageManager = $imageManager;
+        return $this;
+    }
+
+
 }
