@@ -23,14 +23,36 @@ abstract class AbstractImageFiler extends AbstractFiler
     protected $imageManager;
 
     /**
-     * @var array $resizingFilters
+     * @var Iad\Bundle\FilerTechBundle\Config\Configuration|Collection
      */
-    protected $resizingFilters = [];
+    protected $configurations = [];
 
     /**
-     * @var string $waterMarkFilter
+     * @return Iad\Bundle\FilerTechBundle\Config\Configuration
      */
-    protected $waterMarkFilter = null;
+    public function getConfigurations()
+    {
+        return $this->configurations;
+    }
+
+    /**
+     * @param Iad\Bundle\FilerTechBundle\Config\Configuration $configuration
+     *
+     * @return AbstractFiler
+     */
+    public function setConfiguration($configurations)
+    {
+        $this->configurations = $configurations;
+
+        return $this;
+    }
+
+    public function addConfiguration(Iad\Bundle\FilerTechBundle\Config\Configuration $config)
+    {
+        if(isset($this->configurations[$config->getClass()])) {
+            $this->configurations[$config->getClass()] = $config;
+        }
+    }
 
     /**
      * @return ImageManager
@@ -48,46 +70,6 @@ abstract class AbstractImageFiler extends AbstractFiler
     public function setImageManager($imageManager)
     {
         $this->imageManager = $imageManager;
-
-        return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function getResizingFilters()
-    {
-        return $this->resizingFilters;
-    }
-
-    /**
-     * @param array $filters
-     *
-     * @return AbstractFiler
-     */
-    public function setResizingFilters(array $filters)
-    {
-        $this->resizingFilters = $filters;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getWaterMarkFilter()
-    {
-        return $this->waterMarkFilter;
-    }
-
-    /**
-     * @param string $waterMarkFilter
-     *
-     * @return AbstractImageFiler
-     */
-    public function setWaterMarkFilter($waterMarkFilter)
-    {
-        $this->waterMarkFilter = $waterMarkFilter;
 
         return $this;
     }
@@ -125,13 +107,13 @@ abstract class AbstractImageFiler extends AbstractFiler
      *
      * @return ImageFile[]
      */
-    protected function getFilesFromFilters(ImageFile $file)
+    protected function getFilesFromFilters(ImageFile $file, $picture)
     {
         $resizedFiles = [];
         $binary = $this->imageManager->createBinary($file->getContent(), $file->getMimeType());
-        $watermarkFilter = $this->getWaterMarkFilter();
+        $watermarkFilter = $this->configurations[get_class($picture)]->getWaterMarkFilter();
 
-        foreach ($this->getResizingFilters() as $resizeFilter) {
+        foreach ($this->configurations[get_class($picture)]->getResizingFilters() as $resizeFilter) {
             $newBinary  = $this->imageManager->filter($binary, $resizeFilter);
             if ($watermarkFilter) {
                 $newBinary  = $this->imageManager->filter($newBinary, $watermarkFilter);

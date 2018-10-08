@@ -6,7 +6,7 @@
  * Time: 08:57
  */
 
-namespace Iad\Bundle\FilerTechBundle\Model;
+namespace Iad\Bundle\FilerTechBundle\Entity;
 
 
 interface DocumentInterface

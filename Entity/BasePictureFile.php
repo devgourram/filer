@@ -6,7 +6,7 @@
  * Time: 10:44
  */
 
-namespace Iad\Bundle\FilerTechBundle\Model;
+namespace Iad\Bundle\FilerTechBundle\Entity;
 
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Iad\Bundle\FilerTechBundle\Entity\Traits\FilerTrait;
@@ -19,7 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class PictureFile
  * @package Iad\Bundle\FilerTechBundle\Entity
  */
-abstract class PictureFile implements PictureFileInterface
+abstract class BasePictureFile implements PictureFileInterface
 {
     use FilerTrait;
     use ImageTrait;
@@ -29,7 +29,7 @@ abstract class PictureFile implements PictureFileInterface
     /**
      * @var PictureInterface
      *
-     * @ORM\ManyToOne(targetEntity="Picture", inversedBy="files", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="BasePicture", inversedBy="files", cascade={"persist"})
      */
     protected $picture;
 

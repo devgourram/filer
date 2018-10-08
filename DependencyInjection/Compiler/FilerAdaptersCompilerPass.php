@@ -43,8 +43,13 @@ class FilerAdaptersCompilerPass implements CompilerPassInterface
                 $this->injectPrivateFileSystem($container, $businessChannel, $id);
             }
 
-
             $definition = $container->getDefinition($id);
+            $configurations = $config[$businessFilerName]['entries'];
+
+            foreach($configurations as $key => $configuration) {
+                $definition->addMethodCall('addConfiguration', [Configuration::createConfiguration($configuration)]);
+            }
+/*
             if (isset($config[$businessFilerName]['resizing_filters'])) {
                 $definition->addMethodCall('setResizingFilters', [$config[$businessFilerName]['resizing_filters']]);
             }
@@ -67,7 +72,7 @@ class FilerAdaptersCompilerPass implements CompilerPassInterface
 
             if (isset($config[$businessFilerName]['directory_prefix'])) {
                 $definition->addMethodCall('setDirectoryPrefix', [$config[$businessFilerName]['directory_prefix']]);
-            }
+            }*/
 
             $container->setDefinition($id, $definition);
         }

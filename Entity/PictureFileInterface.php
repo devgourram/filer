@@ -6,7 +6,7 @@
  * Time: 11:46
  */
 
-namespace Iad\Bundle\FilerTechBundle\Model;
+namespace Iad\Bundle\FilerTechBundle\Entity;
 
 
 /**

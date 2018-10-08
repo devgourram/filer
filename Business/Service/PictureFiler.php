@@ -22,29 +22,9 @@ use Symfony\Component\HttpFoundation\File\File;
 class PictureFiler extends AbstractImageFiler
 {
     /**
-     * @var string
-     */
-    protected $directoryPrefix;
-
-    /**
-     * @var string
-     */
-    protected $documentType;
-
-    /**
      * @var PictureManagerInterface
      */
     protected $pictureManager;
-
-    /**
-     * @var ImageManager
-     */
-    protected $imageManager;
-
-    /**
-     * @var Encoder
-     */
-    protected $encoder;
 
     /**
      * @var string
@@ -59,65 +39,9 @@ class PictureFiler extends AbstractImageFiler
     protected  $class;
     
     
-    public function __construct(DocumentManagerInterface $pictureManager, ImageManager $imageManager, Encoder $encoder)
+    public function __construct(DocumentManagerInterface $pictureManager)
     {
         $this->pictureManager = $pictureManager;
-        $this->imageManager = $imageManager;
-        $this->encoder = $encoder;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getClass()
-    {
-        return $this->class;
-    }
-
-    /**
-     * @param mixed $class
-     * @return PictureFiler
-     */
-    public function setClass($class)
-    {
-        $this->class = $class;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDirectoryPrefix()
-    {
-        return $this->directoryPrefix;
-    }
-
-    /**
-     * @param string $directoryPrefix
-     * @return PictureFiler
-     */
-    public function setDirectoryPrefix($directoryPrefix)
-    {
-        $this->directoryPrefix = $directoryPrefix;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDocumentType()
-    {
-        return $this->documentType;
-    }
-
-    /**
-     * @param string $documentType
-     * @return PictureFiler
-     */
-    public function setDocumentType($documentType)
-    {
-        $this->documentType = $documentType;
-        return $this;
     }
 
     /**
@@ -163,15 +87,15 @@ class PictureFiler extends AbstractImageFiler
         }
 
         $picture->setTitle($file->getName());
-        $pictureFile = $this->createPictureFile($file, $idAuthor, PictureFile::$sizeNameSource);
+        $pictureFile = $this->createPictureFile($file, $idAuthor, PictureFile::$sizeNameSource, $picture);
         $picture->addFile($pictureFile);
 
-        $resizedFiles = $this->getFilesFromFilters($file);
+        $resizedFiles = $this->getFilesFromFilters($file, $picture);
 
         $pictures = [];
 
         foreach ($resizedFiles as $filterName => $resizedFile) {
-            $pictureResized = $this->createPictureFile($resizedFile, $idAuthor, $filterName);
+            $pictureResized = $this->createPictureFile($resizedFile, $idAuthor, $filterName, $picture);
             $pictureResized->getDocumentObject()->setOriginalName($file->getName());
             $picture->addFile($pictureResized);
             $pictures[] = $pictureResized;
@@ -231,10 +155,11 @@ class PictureFiler extends AbstractImageFiler
      *
      * @return PictureFile
      */
-    private function createPictureFile(ImageFile $file, $idAuthor, $filterName)
+    private function createPictureFile(ImageFile $file, $idAuthor, $filterName, Picture $picture)
     {
         $documentObject = $this->createDocumentObject($file, $idAuthor);
-        $pictureFile = new $this->class();
+        $classFile = $this->configurations[get_class($picture)]->getFilerClass();
+        $pictureFile = new $classFile();
         $pictureFile
             ->setHeight($file->getHeight())
             ->setWidth($file->getWidth())
@@ -242,24 +167,6 @@ class PictureFiler extends AbstractImageFiler
             ->setDocumentObject($documentObject);
 
         return $pictureFile;
-    }
-
-    /**
-     * @return ImageManager
-     */
-    public function getImageManager()
-    {
-        return $this->imageManager;
-    }
-
-    /**
-     * @param ImageManager $imageManager
-     * @return PictureFiler
-     */
-    public function setImageManager($imageManager)
-    {
-        $this->imageManager = $imageManager;
-        return $this;
     }
 
 

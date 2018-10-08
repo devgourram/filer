@@ -6,7 +6,7 @@
  * Time: 08:51
  */
 
-namespace Iad\Bundle\FilerTechBundle\Model;
+namespace Iad\Bundle\FilerTechBundle\Entity;
 
 use Iad\Bundle\FilerTechBundle\Business\Encoder;
 use Iad\Bundle\FilerTechBundle\Entity\Traits\FilerTrait;
@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 
-abstract class Document implements DocumentInterface
+abstract class BaseDocument implements DocumentInterface
 {
     use FilerTrait;
 

@@ -6,7 +6,7 @@
  * Time: 10:41
  */
 
-namespace Iad\Bundle\FilerTechBundle\Model;
+namespace Iad\Bundle\FilerTechBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -20,7 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @package Iad\Bundle\FilerTechBundle\Entity
  */
-abstract class Picture implements PictureInterface, FilableInterface
+abstract class BasePicture implements PictureInterface, FilableInterface
 {
     use TimestampableEntity;
 
@@ -56,7 +56,7 @@ abstract class Picture implements PictureInterface, FilableInterface
 
     /**
      * @var PictureFileInterface|Collection
-     * @ORM\OneToMany(targetEntity="PictureFile", mappedBy="picture", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="BasePictureFile", mappedBy="picture", cascade={"persist"})
      */
     protected $files;
 
