@@ -17,7 +17,7 @@
     "symfony/symfony": "~3.4.0",
     "knplabs/knp-gaufrette-bundle": "~0.3",
     "liip/imagine-bundle": "~2.0",
-    "twig/twig": "~2.0",
+    "twig/twig": "*",
     "symfony/http-foundation": "^3.4.0",
     "iad-holding/core-bundle": "dev-project/AR-42-migration-sf3.4"
   },
