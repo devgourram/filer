@@ -47,8 +47,9 @@ abstract class AbstractImageFiler extends AbstractFiler
         return $this;
     }
 
-    public function addConfiguration(Iad\Bundle\FilerTechBundle\Config\Configuration $config)
-    {
+    public function addConfiguration($configuration)
+    {	
+		$config = \Iad\Bundle\FilerTechBundle\Config\Configuration::createConfiguration($configuration);
         if(isset($this->configurations[$config->getClass()])) {
             $this->configurations[$config->getClass()] = $config;
         }

@@ -14,17 +14,17 @@ use Iad\Bundle\FilerTechBundle\Entity\Traits\ImageTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\MappedSuperclass
- *
- * Class PictureFile
- * @package Iad\Bundle\FilerTechBundle\Entity
+ * @ORM\Entity
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @ORM\DiscriminatorMap({})
  */
 abstract class BasePictureFile implements PictureFileInterface
 {
     use FilerTrait;
     use ImageTrait;
     use TimestampableEntity;
-
+	
 
     /**
      * @var PictureInterface

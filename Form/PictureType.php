@@ -43,7 +43,7 @@ class PictureType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => $this->class
+            'data_class' => 'AppBundle\Entity\BlogPicture'
         ));
     }
 

@@ -45,9 +45,9 @@ class FilerAdaptersCompilerPass implements CompilerPassInterface
 
             $definition = $container->getDefinition($id);
             $configurations = $config[$businessFilerName]['entries'];
-
+			
             foreach($configurations as $key => $configuration) {
-                $definition->addMethodCall('addConfiguration', [Configuration::createConfiguration($configuration)]);
+                $definition->addMethodCall('addConfiguration', [$configuration]);
             }
 /*
             if (isset($config[$businessFilerName]['resizing_filters'])) {

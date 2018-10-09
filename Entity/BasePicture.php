@@ -16,19 +16,23 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\MappedSuperclass
- *
- * @package Iad\Bundle\FilerTechBundle\Entity
+ * @ORM\Entity
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @ORM\DiscriminatorMap({})
  */
 abstract class BasePicture implements PictureInterface, FilableInterface
 {
     use TimestampableEntity;
 
     /**
-     * @var integer
+     * @var int
      *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(name="title", type="string", nullable=true)
@@ -64,6 +68,8 @@ abstract class BasePicture implements PictureInterface, FilableInterface
     public function __construct()
     {
         $this->files = new ArrayCollection();
+		$this->createdAt = new \DateTime();
+		$this->updatedAt = new \DateTime();
     }
 
     /**

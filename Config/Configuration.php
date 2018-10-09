@@ -36,12 +36,12 @@ class Configuration
 	public static function createConfiguration($configs)
 	{
 		return new Configuration(
-			$configs['resizingFilters'], 
-			$configs['waterMarkFilter'], 
+			$configs['resizing_filters'], 
+			(isset($configs['water_markfilter']) ? true : false), 
 			$configs['class'], 
-			$configs['filerClass'], 
-			$configs['directoryPrefix'], 
-			$configs['documentType']
+			$configs['class_file'], 
+			$configs['directory_prefix'], 
+			$configs['document_type']
 			);
 	}
 
