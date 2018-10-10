@@ -2,6 +2,7 @@
 
 namespace Iad\Bundle\FilerTechBundle\Form;
 
+use Iad\Bundle\FilerTechBundle\Entity\BasePicture;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -22,6 +23,14 @@ class PictureType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        dump($options);
+
+        $data = $builder->getData();
+
+        if($data !== null) {
+            dump(get_class($data));
+        }
+
         $builder
                 ->add('originalFile', FileType::class, [
                     'required' => true,
@@ -43,7 +52,6 @@ class PictureType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\BlogPicture'
         ));
     }
 

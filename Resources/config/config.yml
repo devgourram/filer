@@ -7,13 +7,23 @@ iad_filer_tech:
             public_path: "%filer_channel_local_public_path%"
             private_path: "%filer_channel_local_private_path%"
 
-#    picture_filer:
-#        channel: local
-#        public_base_url: "%picture_filer.base_url%"
-#        resizing_filters: []
+    picture_filer:
+        channel: local
+        public_base_url: "%picture_filer.base_url%"
+        entries:
+            picture:
+                resizing_filters: []
+                class: \Iad\Bundle\FilerTechBundle\Entity\basePicture
+                directory_prefix: 'picture/'
+                document_type: 'picture'
 
-#    document_filer:
-#        channel: local
+    document_filer:
+        channel: local
+            entries:
+                documeent:
+                    class: \Iad\Bundle\FilerTechBundle\Entity\BaseDocument
+                    directory_prefix: 'document/'
+                    document_type: 'document'
 
 liip_imagine:
     driver: imagick

@@ -21,7 +21,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({})
  */
-abstract class BasePicture implements PictureInterface, FilableInterface
+class BasePicture implements PictureInterface, FilableInterface
 {
     use TimestampableEntity;
 

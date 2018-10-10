@@ -2,21 +2,21 @@
 
 namespace Iad\Bundle\FilerTechBundle\Tests\Entity;
 
-use Iad\Bundle\FilerTechBundle\Model\Document;
+use Iad\Bundle\FilerTechBundle\Entity\BaseDocument;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * Class DocumentTest
- * @package Iad\Bundle\FilerTechBundle\Tests\Model
+ * Class BaseDocumentTest
+ * @package Iad\Bundle\FilerTechBundle\Tests\Entity
  */
-class DocumentTest extends \PHPUnit_Framework_TestCase
+class BaseDocumentTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test all accessor
      */
     public function testAccessor()
     {
-        $document = $this->getMockBuilder(Document::class)->getMockForAbstractClass();
+        $document = $this->getMockBuilder(BaseDocument::class)->getMockForAbstractClass();
         $uploadedFile     = $this->getUploadedFile();
 
 

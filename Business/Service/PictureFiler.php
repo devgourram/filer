@@ -12,6 +12,8 @@ namespace Iad\Bundle\FilerTechBundle\Business\Service;
 use Iad\Bundle\FilerTechBundle\Business\Encoder;
 use Iad\Bundle\FilerTechBundle\Business\Exception\DocumentMimeTypeException;
 use Iad\Bundle\FilerTechBundle\Business\FileResource\ImageFile;
+use Iad\Bundle\FilerTechBundle\Entity\BasePicture;
+use Iad\Bundle\FilerTechBundle\Entity\BasePictureFile;
 use Iad\Bundle\FilerTechBundle\Model\Picture;
 use Iad\Bundle\FilerTechBundle\Model\PictureFile;
 use Iad\Bundle\FilerTechBundle\Manager\DocumentManagerInterface;
@@ -38,10 +40,12 @@ class PictureFiler extends AbstractImageFiler
 
     protected  $class;
     
-    
-    public function __construct(DocumentManagerInterface $pictureManager)
+
+    public function __construct(DocumentManagerInterface $pictureManager, Encoder $encoder, ImageManager $imageManager)
     {
         $this->pictureManager = $pictureManager;
+        parent::__construct($encoder);
+        parent::setImageManager($imageManager);
     }
 
     /**
@@ -74,7 +78,7 @@ class PictureFiler extends AbstractImageFiler
      * @return RealEstatePicture
      * @throws DocumentMimeTypeException
      */
-    public function create(Picture $picture, $idAuthor, $details = [], CropParameters $cropParameters = null)
+    public function create(BasePicture $picture, $idAuthor, $details = [], CropParameters $cropParameters = null)
     {
         $file = $this->createFile($picture->getOriginalFile(), self::$access, $details);
 
@@ -87,7 +91,7 @@ class PictureFiler extends AbstractImageFiler
         }
 
         $picture->setTitle($file->getName());
-        $pictureFile = $this->createPictureFile($file, $idAuthor, PictureFile::$sizeNameSource, $picture);
+        $pictureFile = $this->createPictureFile($file, $idAuthor, BasePictureFile::$sizeNameSource, $picture);
         $picture->addFile($pictureFile);
 
         $resizedFiles = $this->getFilesFromFilters($file, $picture);
@@ -155,11 +159,10 @@ class PictureFiler extends AbstractImageFiler
      *
      * @return PictureFile
      */
-    private function createPictureFile(ImageFile $file, $idAuthor, $filterName, Picture $picture)
+    private function createPictureFile(ImageFile $file, $idAuthor, $filterName, BasePicture $picture)
     {
-        $documentObject = $this->createDocumentObject($file, $idAuthor);
-        $classFile = $this->configurations[get_class($picture)]->getFilerClass();
-        $pictureFile = new $classFile();
+        $documentObject = $this->createDocumentObject($file, $idAuthor, $picture);
+        $pictureFile = new BasePictureFile();
         $pictureFile
             ->setHeight($file->getHeight())
             ->setWidth($file->getWidth())

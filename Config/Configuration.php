@@ -16,30 +16,26 @@ class Configuration
 
 	private $class;
 
-	private $filerClass;
-
 	private $directoryPrefix;
 
 	private $documentType;
 
 
-	public function __construct($resizingFilters, $waterMarkFilter, $class, $filerClass, $directoryPrefix, $documentType)
+	public function __construct($resizingFilters, $waterMarkFilter, $class, $directoryPrefix, $documentType)
 	{
 		$this->resizingFilters = $resizingFilters;
 		$this->waterMarkFilter = $waterMarkFilter;
 		$this->class = $class;
-		$this->filerClass = $filerClass;
 		$this->directoryPrefix = $directoryPrefix;
-		$this->$documentType = $documentType;
+		$this->documentType = $documentType;
 	}
 
 	public static function createConfiguration($configs)
 	{
 		return new Configuration(
-			$configs['resizing_filters'], 
+            (isset($configs['resizing_filters']) ? $configs['resizing_filters'] : []),
 			(isset($configs['water_markfilter']) ? true : false), 
-			$configs['class'], 
-			$configs['class_file'], 
+			$configs['class'],
 			$configs['directory_prefix'], 
 			$configs['document_type']
 			);
@@ -59,11 +55,6 @@ class Configuration
 	public function getClass()
 	{
 		return $this->class;
-	}
-
-	public function getFilerClass()
-	{
-		return $this->filerClass;
 	}
 
 	public function getDirectoryPrefix()

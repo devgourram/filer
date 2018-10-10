@@ -77,7 +77,6 @@ class Configuration implements ConfigurationInterface
                             ->end()
 							->end()
                             ->scalarNode('watermark_filter')->end()
-                            ->scalarNode('class_file')->isRequired()->cannotBeEmpty()->end()
                             ->scalarNode('class')->isRequired()->cannotBeEmpty()->end()
                             ->scalarNode('document_type')
                                 ->defaultValue('picture')
@@ -87,7 +86,7 @@ class Configuration implements ConfigurationInterface
                                 ->end()
                             ->end()
                         ->end()
-                ->end() 
+                ->end()
         ->end();
 
     }
@@ -96,19 +95,25 @@ class Configuration implements ConfigurationInterface
     {
         $rootNode
             ->children()
-            ->arrayNode('document_filer')->canBeUnset()
-            ->info('Document filer configuration')
-            ->children()
-             ->scalarNode('channel')->end()
-            ->scalarNode('document_type')
-                ->defaultValue('document')
-            ->end()
-            ->scalarNode('directory_prefix')
-                ->defaultValue('document/')
-            ->end()
-            ->scalarNode('class')->isRequired()->cannotBeEmpty()
-            ->end()
-            ->end()
-        ->end();
+                ->arrayNode('document_filer')->canBeUnset()
+                ->info('Document filer configuration')
+                    ->children()
+                        ->scalarNode('channel')
+                    ->end()
+                    ->arrayNode('entries')
+                        ->useAttributeAsKey('name')
+                        ->prototype('array')
+                        ->children()
+                            ->scalarNode('class')->isRequired()->cannotBeEmpty()->end()
+                            ->scalarNode('document_type')
+                                ->defaultValue('picture')
+                            ->end()
+                            ->scalarNode('directory_prefix')
+                                ->defaultValue('document/')
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
     }
 }

@@ -12,7 +12,6 @@ namespace Iad\Bundle\FilerTechBundle\Entity;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * @ORM\MappedSuperclass
  *
  * @package Iad\Bundle\FilerTechBundle\Entity
  */

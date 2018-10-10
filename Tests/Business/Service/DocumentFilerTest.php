@@ -3,13 +3,12 @@
 namespace Iad\Bundle\FilerTechBundle\Tests\Business\Service;
 
 use Gaufrette\Filesystem;
-use Iad\Bundle\FilerTechBundle\Business\Service\AdministrativeDocumentFiler;
-use Iad\Bundle\FilerTechBundle\Business\Encoder;
-use Iad\Bundle\FilerTechBundle\Business\Service\DocumentFiler;
-use Iad\Bundle\FilerTechBundle\Entity\AdministrativeDocument;
-use Iad\Bundle\FilerTechBundle\Model\Document;
+use Iad\Bundle\FilerTechBundle\Config\Configuration;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use phpmock\MockBuilder;
+use Iad\Bundle\FilerTechBundle\Business\Encoder;
+use Iad\Bundle\FilerTechBundle\Business\Service\DocumentFiler;
+use Iad\Bundle\FilerTechBundle\Entity\BaseDocument;
 
 /**
  * Class DocumentFilerTest
@@ -38,7 +37,7 @@ class DocumentFilerTest extends \PHPUnit_Framework_TestCase
         /**
          * Document $document
          */
-        $document = new class extends Document{};
+        $document = new BaseDocument();
         $document->setOriginalFile($file);
 
         $builder = new MockBuilder();
@@ -55,7 +54,7 @@ class DocumentFilerTest extends \PHPUnit_Framework_TestCase
 
         $sObject = $documentFiler->create($document, $idPeople);
 
-        $this->assertInstanceOf(Document::class, $sObject);
+        $this->assertInstanceOf(BaseDocument::class, $sObject);
     }
 
     /**
@@ -69,6 +68,15 @@ class DocumentFilerTest extends \PHPUnit_Framework_TestCase
         $filer = new DocumentFiler($encoder);
         $filer->setPublicFilesystem($filesystem);
         $filer->setPrivateFilesystem($filesystem);
+
+
+        $config = [BaseDocument::class => Configuration::createConfiguration([
+            'class' => BaseDocument::class,
+            'document_type' => 'document',
+            'directory_prefix' => 'document/'
+        ])];
+
+        $filer->setConfiguration($config);
 
         return $filer;
     }

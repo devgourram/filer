@@ -10,8 +10,8 @@
         <service id="iad_filer.picture_filer" class="Iad\Bundle\FilerTechBundle\Business\Service\PictureFiler">
             <tag name="iad_filer.business.service" />
             <argument type="service" id="iad_filer.manager.picture" />
-            <argument type="service" id="iad_filer.image.manager" />
             <argument type="service" id="iad_filer.encoder" />
+            <argument type="service" id="iad_filer.image.manager" />
         </service>
 
         <service id="iad_filer.form.picture_filer" class="Iad\Bundle\FilerTechBundle\Form\PictureType">

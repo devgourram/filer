@@ -1,16 +1,16 @@
 <?php
 
-namespace Iad\Bundle\FilerTechBundle\Tests\Model;
+namespace Iad\Bundle\FilerTechBundle\Tests\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Iad\Bundle\FilerTechBundle\Model\Picture;
-use Iad\Bundle\FilerTechBundle\Model\PictureFile;
+use Iad\Bundle\FilerTechBundle\Entity\BasePicture;
+use Iad\Bundle\FilerTechBundle\Entity\BasePictureFile;
 
 /**
- * Class PictureTest
+ * Class BasePictureTest
  * @package Iad\Bundle\FilerTechBundle\Tests\Entity
  */
-class PictureTest extends \PHPUnit_Framework_TestCase
+class BasePictureTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test all accessor
@@ -19,8 +19,8 @@ class PictureTest extends \PHPUnit_Framework_TestCase
     {
 
 
-        $picture               = $this->getMockBuilder(Picture::class)->getMockForAbstractClass();
-        $pictureFile           = $this->getMockBuilder(PictureFile::class)->getMockForAbstractClass();
+        $picture               = $this->getMockBuilder(BasePicture::class)->getMockForAbstractClass();
+        $pictureFile           = $this->getMockBuilder(BasePictureFile::class)->getMockForAbstractClass();
         $pictureCollection     = new ArrayCollection();
         $now                   = new \DateTime();
         $rank                  = 0;

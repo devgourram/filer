@@ -5,9 +5,9 @@ namespace Iad\Bundle\FilerTechBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * Class EventPictureRepository
+ * Class PictureFileRepository
  */
-class EventPictureRepository extends EntityRepository
+class PictureFileRepository extends EntityRepository
 {
 
 }

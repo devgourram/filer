@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 
-abstract class BaseDocument implements DocumentInterface
+class BaseDocument implements DocumentInterface
 {
     use FilerTrait;
 

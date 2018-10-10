@@ -12,14 +12,12 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Iad\Bundle\FilerTechBundle\Entity\Traits\FilerTrait;
 use Iad\Bundle\FilerTechBundle\Entity\Traits\ImageTrait;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\Date;
 
 /**
  * @ORM\Entity
- * @ORM\InheritanceType("JOINED")
- * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DiscriminatorMap({})
  */
-abstract class BasePictureFile implements PictureFileInterface
+class BasePictureFile implements PictureFileInterface
 {
     use FilerTrait;
     use ImageTrait;
@@ -32,6 +30,12 @@ abstract class BasePictureFile implements PictureFileInterface
      * @ORM\ManyToOne(targetEntity="BasePicture", inversedBy="files", cascade={"persist"})
      */
     protected $picture;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+    }
 
     public function setPicture(PictureInterface $picture)
     {

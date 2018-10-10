@@ -7,6 +7,7 @@ use Gaufrette\Exception\FileNotFound;
 use Gaufrette\Filesystem;
 use Iad\Bundle\FilerTechBundle\Business\FileResource\File;
 use Iad\Bundle\FilerTechBundle\Business\FileResource\FileBuilder;
+use Iad\Bundle\FilerTechBundle\Config\Configuration;
 use Iad\Bundle\FilerTechBundle\Entity\DocumentObject;
 use Liip\ImagineBundle\Binary\BinaryInterface;
 use Liip\ImagineBundle\Model\Binary;
@@ -80,6 +81,40 @@ abstract class AbstractFiler
     public function __construct(Encoder $encoder)
     {
         $this->encoder = $encoder;
+    }
+
+    /**
+     * @var Iad\Bundle\FilerTechBundle\Config\Configuration|Collection
+     */
+    protected $configurations = [];
+
+    /**
+     * @return Iad\Bundle\FilerTechBundle\Config\Configuration
+     */
+    public function getConfigurations()
+    {
+        return $this->configurations;
+    }
+
+    /**
+     * @param Iad\Bundle\FilerTechBundle\Config\Configuration $configuration
+     *
+     * @return AbstractFiler
+     */
+    public function setConfiguration($configurations)
+    {
+        $this->configurations = $configurations;
+
+        return $this;
+    }
+
+    public function addConfiguration($configuration)
+    {
+        $config = \Iad\Bundle\FilerTechBundle\Config\Configuration::createConfiguration($configuration);
+        if(!isset($this->configurations[$config->getClass()])) {
+            $this->configurations[$config->getClass()] = $config;
+        }
+        dump($this->configurations);
     }
 
     /**
@@ -252,8 +287,12 @@ abstract class AbstractFiler
      *
      * @return DocumentObject
      */
-    public function createDocumentObject(File $file, $idPeople)
+    public function createDocumentObject(File $file, $idPeople, $object)
     {
+        /**
+         * @var Configuration $config
+         */
+        $config = $this->configurations[get_class($object)];
         $documentObject = new DocumentObject();
         $documentObject
             ->setUuid($file->getUuid())
@@ -261,11 +300,11 @@ abstract class AbstractFiler
             ->setAccess($file->getAccess())
             ->setCheckSum($file->getChecksum())
             ->setDetails($file->getDetails())
-            ->setDocumentType($file->getDocumentType())
+            ->setDocumentType($config->getDocumentType())
             ->setFullName($file->getFullName())
             ->setSize($file->getSize())
             ->setOriginalName($file->getName())
-            ->setPathDirectory($this->directoryPrefix)
+            ->setPathDirectory($config->getDirectoryPrefix())
             ->setIdUploader($idPeople);
 
         return $documentObject;

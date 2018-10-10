@@ -23,39 +23,6 @@ abstract class AbstractImageFiler extends AbstractFiler
     protected $imageManager;
 
     /**
-     * @var Iad\Bundle\FilerTechBundle\Config\Configuration|Collection
-     */
-    protected $configurations = [];
-
-    /**
-     * @return Iad\Bundle\FilerTechBundle\Config\Configuration
-     */
-    public function getConfigurations()
-    {
-        return $this->configurations;
-    }
-
-    /**
-     * @param Iad\Bundle\FilerTechBundle\Config\Configuration $configuration
-     *
-     * @return AbstractFiler
-     */
-    public function setConfiguration($configurations)
-    {
-        $this->configurations = $configurations;
-
-        return $this;
-    }
-
-    public function addConfiguration($configuration)
-    {	
-		$config = \Iad\Bundle\FilerTechBundle\Config\Configuration::createConfiguration($configuration);
-        if(isset($this->configurations[$config->getClass()])) {
-            $this->configurations[$config->getClass()] = $config;
-        }
-    }
-
-    /**
      * @return ImageManager
      */
     public function getImageManager()
@@ -112,9 +79,9 @@ abstract class AbstractImageFiler extends AbstractFiler
     {
         $resizedFiles = [];
         $binary = $this->imageManager->createBinary($file->getContent(), $file->getMimeType());
-        $watermarkFilter = $this->configurations[get_class($picture)]->getWaterMarkFilter();
+        $watermarkFilter = $this->configurations[get_class($picture)]->getWaterMarkFiler();
 
-        foreach ($this->configurations[get_class($picture)]->getResizingFilters() as $resizeFilter) {
+        foreach ($this->configurations[get_class($picture)]->getResizingFilers() as $resizeFilter) {
             $newBinary  = $this->imageManager->filter($binary, $resizeFilter);
             if ($watermarkFilter) {
                 $newBinary  = $this->imageManager->filter($newBinary, $watermarkFilter);

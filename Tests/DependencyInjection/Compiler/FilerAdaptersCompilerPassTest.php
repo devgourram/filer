@@ -41,8 +41,13 @@ class FilerAdaptersCompilerPassTest extends \PHPUnit_Framework_TestCase
                     ],
                     'picture_filer' => [
                         'channel' => 'local',
-                        'class' => 'anything',
-                        'class_file' => 'anything'
+                        'entries' => [
+                            "picture" => [
+                                'class' => 'anything',
+                                'document_type' => 'picture',
+                                'directory_prefix' => 'picture/'
+                            ]
+                        ]
                     ],
                 ],
             ]);
@@ -68,29 +73,11 @@ class FilerAdaptersCompilerPassTest extends \PHPUnit_Framework_TestCase
             ->with('setPrivateFilesystem', $this->anything())
         ;
 
+
         $definition
             ->expects($this->at(2))
             ->method('addMethodCall')
-            ->with('setResizingFilters', $this->anything())
-        ;
-
-        $definition
-            ->expects($this->at(3))
-            ->method('addMethodCall')
-            ->with('setClass', $this->anything())
-        ;
-
-        $definition
-            ->expects($this->at(4))
-            ->method('addMethodCall')
-            ->with('setDocumentType', $this->anything())
-        ;
-
-        $definition
-            ->expects($this->at(5))
-            ->method('addMethodCall')
-            ->with('setDirectoryPrefix', $this->anything())
-        ;
+            ->with('addConfiguration', $this->anything());
 
 
         $containerBuilder

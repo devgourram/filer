@@ -12,6 +12,7 @@ namespace Iad\Bundle\FilerTechBundle\Business\Service;
 use Iad\Bundle\FilerTechBundle\Business\AbstractFiler;
 use Iad\Bundle\FilerTechBundle\Business\Encoder;
 use Iad\Bundle\FilerTechBundle\Business\FileResource\File;
+use Iad\Bundle\FilerTechBundle\Entity\BaseDocument;
 use Iad\Bundle\FilerTechBundle\Model\DocumentInterface;
 
 class DocumentFiler extends AbstractFiler
@@ -79,11 +80,11 @@ class DocumentFiler extends AbstractFiler
      *
      * @return AdministrativeDocument
      */
-    public function create(DocumentInterface $administrativeDocument, $authorId)
+    public function create(BaseDocument $administrativeDocument, $authorId)
     {
 
         $file = $this->processFile(new File(), $administrativeDocument->getOriginalFile(), self::$access);
-        $documentObject = $this->createDocumentObject($file, $authorId);
+        $documentObject = $this->createDocumentObject($file, $authorId, $administrativeDocument);
         $administrativeDocument->setDocumentObject($documentObject);
 
         return $administrativeDocument;

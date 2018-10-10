@@ -14,6 +14,8 @@ use Iad\Bundle\FilerTechBundle\Business\Encoder;
 use Iad\Bundle\FilerTechBundle\Business\FileResource\File;
 use Iad\Bundle\FilerTechBundle\Business\ImageManager;
 use Iad\Bundle\FilerTechBundle\Business\Service\PictureFiler;
+use Iad\Bundle\FilerTechBundle\Config\Configuration;
+use Iad\Bundle\FilerTechBundle\Entity\BasePicture;
 use Iad\Bundle\FilerTechBundle\Entity\DocumentObject;
 use Iad\Bundle\FilerTechBundle\Manager\DocumentManagerInterface;
 use Iad\Bundle\FilerTechBundle\Manager\PictureManager;
@@ -63,7 +65,7 @@ class PictureFilerTest extends  \PHPUnit_Framework_TestCase
         ;
 
 
-        $this->assertInstanceOf(DocumentObject::class, $pictureFiler->createDocumentObject($file, $idPeople));
+        $this->assertInstanceOf(DocumentObject::class, $pictureFiler->createDocumentObject($file, $idPeople, new BasePicture()));
     }
 
     /**
@@ -75,11 +77,18 @@ class PictureFilerTest extends  \PHPUnit_Framework_TestCase
     {
         $encoder = new Encoder();
 
-        $pictureFiler = new PictureFiler($pictureManager, $imageManager, $encoder);
+        $pictureFiler = new PictureFiler($pictureManager, $encoder, $imageManager);
 
         $pictureFiler->setPublicFilesystem($filesystem);
         $pictureFiler->setPrivateFilesystem($filesystem);
 
+        $config = [BasePicture::class => Configuration::createConfiguration([
+            'class' => BasePicture::class,
+            'document_type' => 'picture',
+            'directory_prefix' => 'picture/'
+        ])];
+
+        $pictureFiler->setConfiguration($config);
 
         return $pictureFiler;
     }
