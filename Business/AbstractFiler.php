@@ -114,7 +114,6 @@ abstract class AbstractFiler
         if(!isset($this->configurations[$config->getClass()])) {
             $this->configurations[$config->getClass()] = $config;
         }
-        dump($this->configurations);
     }
 
     /**
@@ -284,6 +283,7 @@ abstract class AbstractFiler
     /**
      * @param File    $file
      * @param integer $idPeople
+     * @param mixed $object
      *
      * @return DocumentObject
      */

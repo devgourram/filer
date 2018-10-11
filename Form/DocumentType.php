@@ -12,21 +12,12 @@ class DocumentType extends AbstractType
     /**
      * Allowed mime types
      */
-    const MIME_TYPES = [
-        "application/pdf", "application/x-pdf",
-        "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-        "image/jpeg", "image/png",
-    ];
+    const MIME_TYPES = ["application/pdf", "application/x-pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "image/jpeg", "image/png"];
 
     /**
      * Allowed max size : 15 megabyte
      */
     const MAX_SIZE = 15000000;
-
-    /**
-     * @var string
-     */
-    private $class;
 
 
     /**
@@ -34,6 +25,7 @@ class DocumentType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        dump($options);
         $builder
             ->add('originalFile', FileType::class, [
                 'required' => true,
@@ -52,7 +44,6 @@ class DocumentType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => $this->class
         ));
     }
 
@@ -64,13 +55,6 @@ class DocumentType extends AbstractType
         return 'iadfilertech_document';
     }
 
-    /**
-     * @param string $class
-     */
-    public function setClass($class)
-    {
-        $this->class = $class;
-    }
 
 
     

@@ -21,6 +21,5 @@
             <argument type="service" id="iad_filer.image.manager" />
             <argument type="service" id="router" />
         </service>
-
     </services>
 </container>

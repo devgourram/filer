@@ -11,25 +11,11 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class PictureType extends AbstractType
 {
-
-    /**
-     * @var string
-     */
-    private $class;
-
-
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        dump($options);
-
-        $data = $builder->getData();
-
-        if($data !== null) {
-            dump(get_class($data));
-        }
 
         $builder
                 ->add('originalFile', FileType::class, [
@@ -61,14 +47,6 @@ class PictureType extends AbstractType
     public function getBlockPrefix()
     {
         return 'iadfilertech_picture';
-    }
-
-    /**
-     * @param string $class
-     */
-    public function setClass($class)
-    {
-        $this->class = $class;
     }
 
 

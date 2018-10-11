@@ -16,6 +16,11 @@
             <tag name="form.type" alias="iad_filer_form" />
         </service>
 
+        <service id="iad_filer.entity_listener.document" class="Iad\Bundle\FilerTechBundle\EventListener\DocumentListener">
+            <argument type="service" id="iad_filer.document_filer" />
+            <tag name="doctrine.orm.entity_listener"/>
+        </service>
+
     </services>
 
 </container>

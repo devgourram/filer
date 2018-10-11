@@ -13,17 +13,16 @@ iad_filer_tech:
         entries:
             picture:
                 resizing_filters: []
-                class: \Iad\Bundle\FilerTechBundle\Entity\basePicture
+                class: '\Iad\Bundle\FilerTechBundle\Entity\basePicture'
                 directory_prefix: 'picture/'
                 document_type: 'picture'
-
     document_filer:
         channel: local
-            entries:
-                documeent:
-                    class: \Iad\Bundle\FilerTechBundle\Entity\BaseDocument
-                    directory_prefix: 'document/'
-                    document_type: 'document'
+        entries:
+            document:
+                class: '\Iad\Bundle\FilerTechBundle\Entity\BaseDocument'
+                directory_prefix: 'document/'
+                document_type: 'document'
 
 liip_imagine:
     driver: imagick

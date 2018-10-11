@@ -17,9 +17,11 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
+ * @ORM\Table(name="filer_base_picture")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({})
+ * @ORM\EntityListeners({"Iad\Bundle\FilerTechBundle\EventListener\PictureListener"})
  */
 class BasePicture implements PictureInterface, FilableInterface
 {

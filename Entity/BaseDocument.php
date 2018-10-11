@@ -13,11 +13,20 @@ use Iad\Bundle\FilerTechBundle\Entity\Traits\FilerTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
-
+/**
+ * Class BaseDocument
+ * @package Iad\Bundle\FilerTechBundle\Entity
+ *
+ * @ORM\Entity
+ * @ORM\Table(name="filer_base_document")
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @ORM\DiscriminatorMap({})
+ * @ORM\EntityListeners({"Iad\Bundle\FilerTechBundle\EventListener\DocumentListener"})
+ */
 class BaseDocument implements DocumentInterface
 {
     use FilerTrait;
-
 
     /**
      * @var UploadedFile $originalFile

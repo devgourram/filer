@@ -16,6 +16,7 @@ use Symfony\Component\Validator\Constraints\Date;
 
 /**
  * @ORM\Entity
+ * @ORM\Table(name="filer_base_picture_file")
  */
 class BasePictureFile implements PictureFileInterface
 {
