@@ -211,7 +211,7 @@ Depend on the relationship, you can use the base form type
 
 For OneToMany relationship:
 
-    .. code-block:: php-annotations
+.. code-block:: php-annotations
 
     $builder->add('pictures', CollectionType::class, [
                 'entry_type' => PictureType::class // IadTechBundle FormType for picture,
@@ -225,7 +225,7 @@ For OneToMany relationship:
 
 For ManyToOne/OneToOne relationship:
 
-    .. code-block:: php-annotations
+.. code-block:: php-annotations
 
     $builder->add('document', DocumentType::class // IadTechBundle FormType for document,, [
                 'data_class' => BlogDocument::class // Class created inside the app
