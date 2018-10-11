@@ -8,7 +8,6 @@
 
 namespace Iad\Bundle\FilerTechBundle\Entity;
 
-
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**

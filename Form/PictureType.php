@@ -16,7 +16,6 @@ class PictureType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
         $builder
                 ->add('originalFile', FileType::class, [
                     'required' => true,
@@ -48,6 +47,4 @@ class PictureType extends AbstractType
     {
         return 'iadfilertech_picture';
     }
-
-
 }

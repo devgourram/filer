@@ -17,8 +17,6 @@ class BasePictureTest extends \PHPUnit_Framework_TestCase
      */
     public function testAccessor()
     {
-
-
         $picture               = $this->getMockBuilder(BasePicture::class)->getMockForAbstractClass();
         $pictureFile           = $this->getMockBuilder(BasePictureFile::class)->getMockForAbstractClass();
         $pictureCollection     = new ArrayCollection();
@@ -47,5 +45,4 @@ class BasePictureTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($picture, $picture->addFile($pictureFile));
         $this->assertEquals($pictureCollection, $picture->getFiles());
     }
-
 }

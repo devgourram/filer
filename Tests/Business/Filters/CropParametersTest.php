@@ -16,7 +16,6 @@ class CropParametersTest extends \PHPUnit_Framework_TestCase
      */
     public function testAccessor()
     {
-
         $cropParameters = new CropParameters();
 
         $this->assertSame($cropParameters, $cropParameters->setSize(42, 42));

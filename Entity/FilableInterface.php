@@ -8,7 +8,6 @@
 
 namespace Iad\Bundle\FilerTechBundle\Entity;
 
-
 interface FilableInterface
 {
 
@@ -36,5 +35,4 @@ interface FilableInterface
      * @return $this
      */
     public function removeFile(PictureFileInterface $file);
-
 }

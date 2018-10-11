@@ -75,7 +75,7 @@ class Configuration implements ConfigurationInterface
                             ->arrayNode('resizing_filters')
                                 ->prototype('scalar')
                             ->end()
-							->end()
+                            ->end()
                             ->scalarNode('watermark_filter')->end()
                             ->scalarNode('class')->isRequired()->cannotBeEmpty()->end()
                             ->scalarNode('document_type')
@@ -88,7 +88,6 @@ class Configuration implements ConfigurationInterface
                         ->end()
                 ->end()
         ->end();
-
     }
 
     private function addDocumentFiler(ArrayNodeDefinition $rootNode)

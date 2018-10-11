@@ -111,5 +111,4 @@ class DocumentFilerTest extends \PHPUnit_Framework_TestCase
 
         return $object;
     }
-
 }

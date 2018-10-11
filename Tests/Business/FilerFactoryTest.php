@@ -42,6 +42,5 @@ class FilerFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(FilerFactory::class, $fileFactory);
         $this->assertEquals($imageManager, $fileFactory->getImageManager());
         $this->assertEquals($encoder, $fileFactory->getEncoder());
-
     }
 }

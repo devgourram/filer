@@ -8,7 +8,6 @@
 
 namespace Iad\Bundle\FilerTechBundle\Tests\Business\Service;
 
- 
 use Gaufrette\Filesystem;
 use Iad\Bundle\FilerTechBundle\Business\Encoder;
 use Iad\Bundle\FilerTechBundle\Business\FileResource\File;
@@ -21,7 +20,7 @@ use Iad\Bundle\FilerTechBundle\Manager\DocumentManagerInterface;
 use Iad\Bundle\FilerTechBundle\Manager\PictureManager;
 use PHPUnit\Framework\TestCase;
 
-class PictureFilerTest extends  \PHPUnit_Framework_TestCase
+class PictureFilerTest extends \PHPUnit_Framework_TestCase
 {
     public function testAccessor()
     {

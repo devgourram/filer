@@ -22,10 +22,8 @@ class IadFilerTechExtension extends Extension implements PrependExtensionInterfa
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
-
     }
 
     /**
@@ -80,14 +78,13 @@ class IadFilerTechExtension extends Extension implements PrependExtensionInterfa
 
         $container->prependExtensionConfig('knp_gaufrette', $configGaufrette);
 
-        if(!empty($configFiler['picture_filer'])) {
+        if (!empty($configFiler['picture_filer'])) {
             $this->loadPicture($loader, $configFiler['picture_filer'], $container);
         }
 
-        if(!empty($configFiler['document_filer'])){
+        if (!empty($configFiler['document_filer'])) {
             $this->loadDocument($loader, $configFiler['document_filer'], $container);
         }
-
     }
 
     /**
@@ -111,5 +108,4 @@ class IadFilerTechExtension extends Extension implements PrependExtensionInterfa
     {
         $loader->load('document.xml');
     }
-
 }

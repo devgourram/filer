@@ -8,7 +8,6 @@
 
 namespace Iad\Bundle\FilerTechBundle\DependencyInjection\Compiler;
 
-
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Iad\Bundle\FilerTechBundle\DependencyInjection\Configuration;
@@ -24,8 +23,7 @@ class FilerFormCompilerPass implements CompilerPassInterface
         $config = $this->getConfiguration($container);
         $taggedServices = $container->findTaggedServiceIds('form.type');
 
-        foreach($taggedServices as $id => $tag)
-        {
+        foreach ($taggedServices as $id => $tag) {
             $businessFilerName = str_replace('iad_filer.form.', '', $id);
 
 

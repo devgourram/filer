@@ -71,7 +71,6 @@ class FilerController extends FOSRestController
         try {
             /** @var DocumentObject $document */
             $document = $this->get('iad_filer.manager.document_object')->findOneByUuid($uuid);
-
         } catch (DocumentNotFoundException $e) {
             throw $this->createNotFoundException($e->getMessage());
         }
@@ -96,7 +95,6 @@ class FilerController extends FOSRestController
             /** @var DocumentObject $document */
             $document = $this->get('iad_filer.manager.document_object')->findOneByUuid($uuid);
             $file = $this->get('iad_filer.administrative_document_filer')->getFileFromEntity($document);
-
         } catch (DocumentNotFoundException $e) {
             throw $this->createNotFoundException($e->getMessage());
         }

@@ -23,7 +23,7 @@ class BasePictureFile implements PictureFileInterface
     use FilerTrait;
     use ImageTrait;
     use TimestampableEntity;
-	
+    
 
     /**
      * @var PictureInterface

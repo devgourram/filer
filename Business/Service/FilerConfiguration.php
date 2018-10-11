@@ -190,6 +190,4 @@ class FilerConfiguration
 
         return $configurator;
     }
-
-
 }

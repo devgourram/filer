@@ -8,7 +8,6 @@
 
 namespace Iad\Bundle\FilerTechBundle\Entity;
 
-
 interface DocumentInterface
 {
     /**

@@ -10,60 +10,60 @@ namespace Iad\Bundle\FilerTechBundle\Config;
 
 class Configuration
 {
-	private $resizingFilters;
+    private $resizingFilters;
 
-	private $waterMarkFilter;
+    private $waterMarkFilter;
 
-	private $class;
+    private $class;
 
-	private $directoryPrefix;
+    private $directoryPrefix;
 
-	private $documentType;
+    private $documentType;
 
 
-	public function __construct($resizingFilters, $waterMarkFilter, $class, $directoryPrefix, $documentType)
-	{
-		$this->resizingFilters = $resizingFilters;
-		$this->waterMarkFilter = $waterMarkFilter;
-		$this->class = $class;
-		$this->directoryPrefix = $directoryPrefix;
-		$this->documentType = $documentType;
-	}
+    public function __construct($resizingFilters, $waterMarkFilter, $class, $directoryPrefix, $documentType)
+    {
+        $this->resizingFilters = $resizingFilters;
+        $this->waterMarkFilter = $waterMarkFilter;
+        $this->class = $class;
+        $this->directoryPrefix = $directoryPrefix;
+        $this->documentType = $documentType;
+    }
 
-	public static function createConfiguration($configs)
-	{
-		return new Configuration(
+    public static function createConfiguration($configs)
+    {
+        return new Configuration(
             (isset($configs['resizing_filters']) ? $configs['resizing_filters'] : []),
-			(isset($configs['water_markfilter']) ? true : false), 
-			$configs['class'],
-			$configs['directory_prefix'], 
-			$configs['document_type']
-			);
-	}
+            (isset($configs['water_markfilter']) ? true : false),
+            $configs['class'],
+            $configs['directory_prefix'],
+            $configs['document_type']
+            );
+    }
 
 
-	public function getResizingFilers()
-	{
-		return $this->resizingFilters;
-	}
+    public function getResizingFilers()
+    {
+        return $this->resizingFilters;
+    }
 
-	public function getWaterMarkFiler()
-	{
-		return $this->waterMarkFilter;
-	}
+    public function getWaterMarkFiler()
+    {
+        return $this->waterMarkFilter;
+    }
 
-	public function getClass()
-	{
-		return $this->class;
-	}
+    public function getClass()
+    {
+        return $this->class;
+    }
 
-	public function getDirectoryPrefix()
-	{
-		return $this->directoryPrefix;
-	}
+    public function getDirectoryPrefix()
+    {
+        return $this->directoryPrefix;
+    }
 
-	public function getDocumentType()
-	{
-		return $this->documentType;
-	}
+    public function getDocumentType()
+    {
+        return $this->documentType;
+    }
 }

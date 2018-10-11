@@ -9,5 +9,4 @@ use Doctrine\ORM\EntityRepository;
  */
 class PictureFileRepository extends EntityRepository
 {
-
 }

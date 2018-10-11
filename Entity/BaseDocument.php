@@ -59,6 +59,4 @@ class BaseDocument implements DocumentInterface
         $this->originalFile = $originalFile;
         return $this;
     }
-
-
 }

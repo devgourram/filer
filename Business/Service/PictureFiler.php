@@ -8,7 +8,6 @@
 
 namespace Iad\Bundle\FilerTechBundle\Business\Service;
 
-
 use Iad\Bundle\FilerTechBundle\Business\Encoder;
 use Iad\Bundle\FilerTechBundle\Business\Exception\DocumentMimeTypeException;
 use Iad\Bundle\FilerTechBundle\Business\FileResource\ImageFile;
@@ -38,7 +37,7 @@ class PictureFiler extends AbstractImageFiler
      */
     protected static $defaultFilter = 'high';
 
-    protected  $class;
+    protected $class;
     
 
     public function __construct(DocumentManagerInterface $pictureManager, Encoder $encoder, ImageManager $imageManager)
@@ -171,6 +170,4 @@ class PictureFiler extends AbstractImageFiler
 
         return $pictureFile;
     }
-
-
 }

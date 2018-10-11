@@ -1,5 +1,6 @@
 <?php
 namespace Iad\Bundle\FilerTechBundle\EventListener;
+
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Iad\Bundle\FilerTechBundle\Business\Service\PictureFiler;
 use Iad\Bundle\FilerTechBundle\Entity\BasePicture;

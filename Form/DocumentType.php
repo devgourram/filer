@@ -54,9 +54,4 @@ class DocumentType extends AbstractType
     {
         return 'iadfilertech_document';
     }
-
-
-
-    
-
 }

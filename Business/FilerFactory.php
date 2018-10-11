@@ -118,6 +118,4 @@ class FilerFactory
         $this->imageManager = $imageManager;
         return $this;
     }
-
-
 }

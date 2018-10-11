@@ -111,7 +111,7 @@ abstract class AbstractFiler
     public function addConfiguration($configuration)
     {
         $config = \Iad\Bundle\FilerTechBundle\Config\Configuration::createConfiguration($configuration);
-        if(!isset($this->configurations[$config->getClass()])) {
+        if (!isset($this->configurations[$config->getClass()])) {
             $this->configurations[$config->getClass()] = $config;
         }
     }

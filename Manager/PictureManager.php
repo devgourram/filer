@@ -8,7 +8,6 @@
 
 namespace Iad\Bundle\FilerTechBundle\Manager;
 
-
 use Iad\Bundle\CoreBundle\Manager\AbstractPaginateManager;
 
 class PictureManager extends AbstractPaginateManager implements DocumentManagerInterface
@@ -29,5 +28,4 @@ class PictureManager extends AbstractPaginateManager implements DocumentManagerI
     {
         return $this->entityManager->getRepository('IadFilerTechBundle:Picture');
     }
-
 }

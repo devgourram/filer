@@ -8,7 +8,6 @@
 
 namespace Iad\Bundle\FilerTechBundle\Business\Service;
 
-
 use Iad\Bundle\FilerTechBundle\Business\AbstractFiler;
 use Iad\Bundle\FilerTechBundle\Business\Encoder;
 use Iad\Bundle\FilerTechBundle\Business\FileResource\File;
@@ -82,7 +81,6 @@ class DocumentFiler extends AbstractFiler
      */
     public function create(BaseDocument $administrativeDocument, $authorId)
     {
-
         $file = $this->processFile(new File(), $administrativeDocument->getOriginalFile(), self::$access);
         $documentObject = $this->createDocumentObject($file, $authorId, $administrativeDocument);
         $administrativeDocument->setDocumentObject($documentObject);

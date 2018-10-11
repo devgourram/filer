@@ -15,7 +15,6 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  */
 class DocumentObject
 {
-
     use TimestampableEntity;
 
     const ACCESS_TYPE   = 'private';

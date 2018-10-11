@@ -70,8 +70,8 @@ class BasePicture implements PictureInterface, FilableInterface
     public function __construct()
     {
         $this->files = new ArrayCollection();
-		$this->createdAt = new \DateTime();
-		$this->updatedAt = new \DateTime();
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
     }
 
     /**
@@ -192,5 +192,4 @@ class BasePicture implements PictureInterface, FilableInterface
         $this->originalFile = $originalFile;
         return $this;
     }
-
 }
